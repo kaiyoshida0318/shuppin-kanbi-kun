@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>出品登録完備くん</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=JetBrains+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: brand bar + progress summary, add-row form, toolbar, then one wide checklist table (scrolls sideways on phones). */
+:root {
+  --bg: #F2F4F8;
+  --surface: #FFFFFF;
+  --ink: #161A22;
+  --muted: #667085;
+  --line: #DCE1EA;
+  --accent: #2F4BD6;
+  --accent-soft: #E7EBFC;
+  --ok: #157A4C;
+  --ok-soft: #DFF2E8;
+  --wait: #93560A;
+  --wait-soft: #FBEDD8;
+  --danger: #C2362B;
+  --danger-soft: #FBE4E1;
+  --f-display: "Dela Gothic One", "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10131A; --surface: #181C25; --ink: #E7EAF1; --muted: #98A0B3; --line: #2A303C;
+    --accent: #8095FF; --accent-soft: #222A4D; --ok: #4CC58A; --ok-soft: #163325;
+    --wait: #E6A64C; --wait-soft: #3A2A13; --danger: #F07468; --danger-soft: #3C1D1A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10131A; --surface: #181C25; --ink: #E7EAF1; --muted: #98A0B3; --line: #2A303C;
+  --accent: #8095FF; --accent-soft: #222A4D; --ok: #4CC58A; --ok-soft: #163325;
+  --wait: #E6A64C; --wait-soft: #3A2A13; --danger: #F07468; --danger-soft: #3C1D1A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.6; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; padding-block: 24px 48px; display: grid; gap: 18px; }
+@media (max-width: 520px) { .wrap { padding-inline: 16px; } }
+
+/* Top */
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; }
+.brand { display: grid; gap: 2px; }
+.logo { font-family: var(--f-display); font-size: clamp(24px, 4vw, 32px); letter-spacing: .02em; line-height: 1.2; }
+.logo b { color: var(--accent); font-weight: inherit; }
+.sub { color: var(--muted); font-size: 13px; }
+.summary { display: grid; gap: 8px; min-width: 0; flex: 1 1 360px; max-width: 560px; }
+.nums { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
+.num { display: flex; align-items: baseline; gap: 6px; }
+.num strong { font-family: var(--f-mono); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.num span { color: var(--muted); font-size: 12px; letter-spacing: .04em; }
+.num.ok strong { color: var(--ok); }
+.num.wait strong { color: var(--wait); }
+.bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--ok); border-radius: inherit; transition: width .4s ease; }
+.colstats { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 12px; }
+.colstats span b { font-family: var(--f-mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Add form */
+.add { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; gap: 10px;
+  grid-template-columns: 150px minmax(0, 2fr) minmax(0, 1fr) auto auto; align-items: end; }
+.add .f { display: grid; gap: 4px; min-width: 0; }
+.add label.cap { font-size: 11px; color: var(--muted); letter-spacing: .06em; }
+.add input[type=text], .add input[type=date] { width: 100%; height: 38px; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; background: var(--bg); color: var(--ink); font: inherit; }
+.add input[type=date] { font-family: var(--f-mono); font-size: 13px; }
+.add input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.filebtn { height: 38px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 1px dashed var(--muted); border-radius: 8px; color: var(--muted); cursor: pointer; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+.filebtn.has { border-style: solid; border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn { height: 38px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--accent); color: var(--surface); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.btn:disabled { opacity: .5; cursor: wait; }
+.btn:focus-visible, .ghost:focus-visible, .seg button:focus-visible, .filebtn:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 860px) {
+  .add { grid-template-columns: 1fr 1fr; }
+  .add .f.name { grid-column: 1 / -1; order: -1; }
+}
+.vh { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* Toolbar */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.seg { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 6px; cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.seg button em { font-style: normal; font-family: var(--f-mono); font-size: 12px; margin-left: 4px; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; flex: 1 1 auto; justify-content: flex-end; }
+.search { height: 34px; min-width: 0; width: 220px; max-width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; background: var(--surface); color: var(--ink); font: inherit; }
+.search:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ghost { height: 34px; padding: 0 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; font: inherit; font-size: 13px; cursor: pointer; white-space: nowrap; }
+.ghost[aria-expanded=true] { border-color: var(--accent); color: var(--accent); }
+
+/* Column editor */
+.coled { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; gap: 10px; }
+.coled h2 { margin: 0; font-size: 13px; font-weight: 700; }
+.coled p { margin: 0; color: var(--muted); font-size: 12px; }
+.coled ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.coled li { display: flex; align-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 8px; padding: 4px; background: var(--bg); }
+.coled li input { width: 120px; height: 30px; border: 0; background: transparent; color: var(--ink); font: inherit; padding: 0 6px; }
+.coled li input:focus-visible { outline: 2px solid var(--accent); border-radius: 6px; }
+.mini { height: 28px; min-width: 28px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); font: inherit; font-size: 12px; cursor: pointer; }
+.mini:hover { background: var(--line); color: var(--ink); }
+.mini.armed { background: var(--danger-soft); color: var(--danger); font-weight: 700; }
+.coladd { display: flex; gap: 8px; flex-wrap: wrap; }
+.coladd input { height: 34px; width: 200px; max-width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; background: var(--bg); color: var(--ink); font: inherit; }
+
+/* Table */
+.tablewrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 900px; }
+thead th { position: sticky; top: 0; background: var(--surface); z-index: 1; text-align: left; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; padding: 10px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+thead th.c { text-align: center; }
+tbody td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: color-mix(in srgb, var(--accent-soft) 40%, transparent); }
+tbody tr.done td { background: color-mix(in srgb, var(--ok-soft) 55%, transparent); }
+td.c { text-align: center; }
+.cell { width: 100%; border: 1px solid transparent; background: transparent; color: var(--ink); font: inherit; padding: 6px 6px; border-radius: 6px; }
+.cell:hover:not([readonly]) { border-color: var(--line); }
+.cell:focus-visible { outline: none; border-color: var(--accent); background: var(--surface); }
+.cell.date { font-family: var(--f-mono); font-size: 12.5px; width: 132px; font-variant-numeric: tabular-nums; }
+.cell.code { font-family: var(--f-mono); font-size: 12.5px; }
+.cell.name { font-weight: 500; min-width: 180px; }
+.imgcell { width: 92px; }
+.imgbox { display: flex; align-items: center; gap: 6px; }
+.thumb { width: 52px; height: 52px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); padding: 0; overflow: hidden; cursor: pointer; display: grid; place-items: center; flex: none; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.empty { border-style: dashed; color: var(--muted); font-size: 11px; }
+.thumb.empty:hover { border-color: var(--accent); color: var(--accent); }
+.swap { font-size: 11px; color: var(--accent); cursor: pointer; }
+.noimg { color: var(--muted); font-size: 11px; }
+.imgcell.busy .thumb { opacity: .4; }
+.imgcell.busy::after { content: "保存中…"; font-size: 11px; color: var(--muted); }
+
+input.chk { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border: 2px solid var(--line); border-radius: 6px; background: var(--surface); cursor: pointer; display: inline-grid; place-items: center; margin: 0; transition: background .15s, border-color .15s; }
+input.chk::after { content: ""; width: 6px; height: 11px; border: solid var(--surface); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) translate(-1px, -1px); opacity: 0; }
+input.chk:checked { background: var(--accent); border-color: var(--accent); }
+input.chk:checked::after { opacity: 1; }
+input.chk:hover:not(:disabled) { border-color: var(--accent); }
+input.chk:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input.chk:disabled { cursor: default; }
+
+.pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 99px; white-space: nowrap; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.wait { background: var(--wait-soft); color: var(--wait); }
+.del { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 12px; padding: 4px 8px; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+.del:hover { color: var(--danger); background: var(--danger-soft); }
+.del.armed { color: var(--danger); background: var(--danger-soft); font-weight: 700; }
+
+.empty { padding: 40px 16px; text-align: center; color: var(--muted); display: grid; gap: 4px; }
+.empty strong { color: var(--ink); font-size: 15px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 8px; font-size: 13px; max-width: calc(100% - 32px); z-index: 10; }
+.lightbox { position: fixed; inset: 0; background: color-mix(in srgb, var(--bg) 88%, transparent); display: grid; place-items: center; padding: 24px; z-index: 20; cursor: zoom-out; }
+.lightbox img { max-width: min(92vw, 900px); max-height: 86vh; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+/* GitHub version: connection screen + sync indicator */
+.headright { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sync { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.sync i { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.sync[data-s=saved] i { background: var(--ok); }
+.sync[data-s=pending] i, .sync[data-s=saving] i, .sync[data-s=loading] i { background: var(--wait); }
+.sync[data-s=error] { color: var(--danger); }
+.sync[data-s=error] i { background: var(--danger); }
+.sync button { border: 0; background: var(--danger-soft); color: var(--danger); font: inherit; font-weight: 700; padding: 2px 8px; border-radius: 6px; cursor: pointer; }
+.setup { max-width: 520px; width: 100%; margin: 24px auto 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px; display: grid; gap: 14px; }
+.setup h2 { margin: 0; font-size: 17px; }
+.setup p { margin: 0; color: var(--muted); font-size: 13px; }
+.setup .f { display: grid; gap: 4px; }
+.setup label { font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+.setup input { height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; background: var(--bg); color: var(--ink); font: inherit; width: 100%; }
+.setup input#sToken { font-family: var(--f-mono); font-size: 13px; }
+.setup input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.setup .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.setup .err { color: var(--danger); font-size: 13px; }
+.setup .actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+.setup .note { font-size: 12px; }
+.setup details summary { cursor: pointer; font-size: 13px; color: var(--accent); }
+.setup details ol { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
+.loadingimg { width: 100%; height: 100%; background: linear-gradient(90deg, var(--line), var(--bg), var(--line)); background-size: 200% 100%; animation: shimmer 1.2s linear infinite; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+@media (max-width: 520px) { .setup .row2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">出品登録<b>完備</b>くん</div>
+      <div class="sub">商品ごとに、出品までの準備をチェックする表</div>
+    </div>
+    <div class="summary" id="summaryBox" aria-live="polite">
+      <div class="nums">
+        <div class="num"><strong id="sTotal">0</strong><span>商品</span></div>
+        <div class="num ok"><strong id="sDone">0</strong><span>完備</span></div>
+        <div class="num wait"><strong id="sTodo">0</strong><span>未完了</span></div>
+      </div>
+      <div class="bar" aria-hidden="true"><i id="sBar"></i></div>
+      <div class="colstats" id="sCols"></div>
+    </div>
+  </header>
+
+  <section class="setup" id="setup" hidden>
+    <h2>GitHub につなぐ</h2>
+    <p>商品データと画像は、データ用の非公開リポジトリに保存されます。トークンはこのブラウザの中だけに保存され、GitHub 以外には送られません。</p>
+    <div class="row2">
+      <div class="f"><label for="sOwner">GitHub ユーザー名</label><input type="text" id="sOwner" autocomplete="off" spellcheck="false"></div>
+      <div class="f"><label for="sRepo">データ用リポジトリ名</label><input type="text" id="sRepo" autocomplete="off" spellcheck="false"></div>
+    </div>
+    <div class="f"><label for="sToken">トークン（github_pat_ で始まる文字列）</label><input type="password" id="sToken" autocomplete="off" spellcheck="false"></div>
+    <details>
+      <summary>トークンの作り方</summary>
+      <ol>
+        <li>GitHub 右上のアイコン → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</li>
+        <li>Repository access で「Only select repositories」を選び、データ用リポジトリを選ぶ</li>
+        <li>Permissions の Contents を「Read and write」にする</li>
+        <li>Generate token を押し、表示された文字列をここに貼り付ける</li>
+      </ol>
+    </details>
+    <p class="err" id="setupErr" hidden></p>
+    <div class="actions">
+      <span class="note" id="setupNote"></span>
+      <button class="btn" type="button" id="connectBtn">接続する</button>
+    </div>
+  </section>
+
+  <div id="app" hidden>
+    <div style="display:grid;gap:18px">
+      <form class="add" id="addForm" autocomplete="off">
+        <div class="f"><label class="cap" for="inDate">登録日付</label><input type="date" id="inDate"></div>
+        <div class="f name"><label class="cap" for="inName">商品名</label><input type="text" id="inName" placeholder="例：リネン半袖シャツ ネイビー M"></div>
+        <div class="f"><label class="cap" for="inCode">商品コード</label><input type="text" id="inCode" placeholder="例：LN-SS-NV-M"></div>
+        <div class="f"><span class="cap">商品画像</span>
+          <label class="filebtn" id="fileLabel" for="inFile">＋ 画像を選ぶ</label>
+          <input type="file" id="inFile" class="vh" accept="image/png,image/jpeg,image/webp,image/gif">
+        </div>
+        <button class="btn" id="addBtn" type="submit">登録する</button>
+      </form>
+
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="表示の絞り込み">
+          <button type="button" data-f="all" aria-pressed="true">すべて<em id="cAll">0</em></button>
+          <button type="button" data-f="todo" aria-pressed="false">未完了<em id="cTodo">0</em></button>
+          <button type="button" data-f="done" aria-pressed="false">完備<em id="cDone">0</em></button>
+        </div>
+        <div class="tools">
+          <span class="sync" id="sync" data-s="loading"><i></i><span id="syncText">読み込み中…</span></span>
+          <input type="search" class="search" id="search" placeholder="商品名・コードで検索" aria-label="商品名・コードで検索">
+          <button type="button" class="ghost" id="refreshBtn">最新にする</button>
+          <button type="button" class="ghost" id="colBtn" aria-expanded="false" aria-controls="colEditor">チェック項目を編集</button>
+          <button type="button" class="ghost" id="settingsBtn">接続設定</button>
+        </div>
+      </div>
+
+      <section class="coled" id="colEditor" hidden>
+        <h2>チェック項目</h2>
+        <p>表の右側に並ぶチェック欄です。名前の変更・並べ替え・追加ができます。すべてにチェックが入った商品が「完備」になります。</p>
+        <ul id="colList"></ul>
+        <div class="coladd">
+          <input type="text" id="colNew" placeholder="例：ショップ登録、X投稿" aria-label="追加する項目名">
+          <button type="button" class="ghost" id="colAdd">項目を追加</button>
+        </div>
+      </section>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr id="headRow"></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty"><strong>読み込み中…</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<div class="lightbox" id="lightbox" hidden><img id="lbImg" alt="商品画像（拡大）"></div>
+
+<script>
+/* ===== 初期設定（身内で使うときの既定値） ===== */
+const DEFAULT_OWNER = "kaiyoshida0318";
+const DEFAULT_REPO = "shuppin-kanbi-data";
+const BRANCH = "main";
+const DATA_PATH = "data/items.json";
+const IMAGE_DIR = "images";
+const MAX_IMAGE_MB = 10;
+
+const DEFAULT_COLS = [
+  { key: "compress", label: "画像圧縮" },
+  { key: "text", label: "文字反映" },
+  { key: "ig", label: "IG登録" },
+];
+const LS_KEY = "shuppin-kanbi-kun:settings";
+
+let cfg = null;
+let data = { columns: DEFAULT_COLS.slice(), items: [] };
+let serverData = null;
+let sha = null;
+let loaded = false;
+let readOnly = false;
+let filter = "all", query = "";
+let colSig = "";
+const rowMap = new Map();
+const pending = [];
+const afterSave = [];
+let flushT = null, saving = false;
+const imgCache = new Map();
+
+const $ = (s) => document.querySelector(s);
+function el(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") e.className = v;
+    else if (k === "text") e.textContent = v;
+    else if (v === true) e.setAttribute(k, "");
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  for (const c of kids) if (c != null) e.append(c);
+  return e;
+}
+const clone = (o) => JSON.parse(JSON.stringify(o));
+function today() {
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+const newId = () => "i" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+let toastT;
+function flash(msg) {
+  const t = $("#toast"); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastT); toastT = setTimeout(() => (t.hidden = true), 3200);
+}
+const cols = () => data.columns;
+const checked = (it, k) => !!(it.checks && it.checks[k]);
+const isDone = (it) => cols().length > 0 && cols().every((c) => checked(it, c.key));
+
+/* ===== 設定の保存（このブラウザのみ） ===== */
+function loadCfg() {
+  try { const c = JSON.parse(localStorage.getItem(LS_KEY) || "null"); if (c && c.owner && c.repo && c.token) return c; } catch (_) {}
+  return null;
+}
+function storeCfg(c) { try { localStorage.setItem(LS_KEY, JSON.stringify(c)); } catch (_) {} }
+
+/* ===== GitHub API ===== */
+const encPath = (p) => p.split("/").map(encodeURIComponent).join("/");
+function api(path, opts = {}) {
+  return fetch(`https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}${path}`, {
+    cache: "no-store",
+    ...opts,
+    headers: {
+      Authorization: `Bearer ${cfg.token}`,
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      ...(opts.headers || {}),
+    },
+  });
+}
+function httpErr(r) { const e = new Error("http " + r.status); e.status = r.status; e.limit = r.headers.get("x-ratelimit-remaining"); return e; }
+function b64enc(str) {
+  const bytes = new TextEncoder().encode(str); let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+function b64dec(b64) {
+  const bin = atob(b64.replace(/\s/g, ""));
+  return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
+}
+function normalize(p) {
+  const columns = Array.isArray(p && p.columns) && p.columns.length
+    ? p.columns.filter((c) => c && c.key).map((c) => ({ key: String(c.key), label: String(c.label || c.key) }))
+    : DEFAULT_COLS.slice();
+  const items = Array.isArray(p && p.items) ? p.items.filter((i) => i && i.id).map((i) => ({ checks: {}, ...i })) : [];
+  return { columns, items };
+}
+async function fetchData() {
+  const url = `/contents/${encPath(DATA_PATH)}?ref=${encodeURIComponent(BRANCH)}`;
+  const r = await api(url);
+  if (r.status === 404) return { data: normalize(null), sha: null };
+  if (!r.ok) throw httpErr(r);
+  const j = await r.json();
+  let text;
+  if (j.content) text = b64dec(j.content);
+  else {
+    const raw = await api(url, { headers: { Accept: "application/vnd.github.raw" } });
+    if (!raw.ok) throw httpErr(raw);
+    text = await raw.text();
+  }
+  return { data: normalize(JSON.parse(text)), sha: j.sha };
+}
+function errMessage(e) {
+  const s = e && e.status;
+  if (s === 401) return "トークンが無効か、期限切れです。「接続設定」から新しいトークンを入れてください。";
+  if (s === 403 && e.limit === "0") return "GitHub の利用回数の上限に達しました。しばらく待ってから操作してください。";
+  if (s === 403) return "このトークンには書き込みの権限がありません。Contents を「Read and write」にしたトークンを使ってください。";
+  if (s === 404) return "リポジトリが見つかりません。名前と、トークンの対象リポジトリを確認してください。";
+  if (s === 409 || s === 422) return "他の人の変更と重なりました。「最新にする」を押してからやり直してください。";
+  return "GitHub に接続できませんでした。通信を確認してもう一度お試しください。";
+}
+
+/* ===== 変更をまとめて保存（約1秒ごとに1コミット） ===== */
+function enqueue(fn) {
+  if (readOnly) return;
+  pending.push(fn);
+  fn(data);
+  renderAll();
+  setSync("pending");
+  clearTimeout(flushT);
+  flushT = setTimeout(flush, 1200);
+}
+function updItem(id, fn) { enqueue((d) => { const it = d.items.find((i) => i.id === id); if (it) fn(it); }); }
+async function flush() {
+  if (saving) { clearTimeout(flushT); flushT = setTimeout(flush, 600); return; }
+  if (!pending.length) return;
+  saving = true;
+  const batch = pending.splice(0);
+  const jobs = afterSave.splice(0);
+  setSync("saving");
+  try {
+    for (let attempt = 0; ; attempt++) {
+      const base = attempt === 0 && serverData ? { data: clone(serverData), sha } : await fetchData();
+      batch.forEach((fn) => fn(base.data));
+      const body = { message: `出品登録完備くん: ${batch.length}件の変更`, content: b64enc(JSON.stringify(base.data, null, 1)), branch: BRANCH };
+      if (base.sha) body.sha = base.sha;
+      const r = await api(`/contents/${encPath(DATA_PATH)}`, { method: "PUT", body: JSON.stringify(body) });
+      if (r.ok) {
+        const j = await r.json();
+        sha = j.content.sha;
+        serverData = clone(base.data);
+        data = clone(base.data);
+        pending.forEach((fn) => fn(data));
+        renderAll();
+        setSync(pending.length ? "pending" : "saved");
+        jobs.forEach((job) => job());
+        break;
+      }
+      if ((r.status === 409 || r.status === 422) && attempt < 3) continue;
+      throw httpErr(r);
+    }
+  } catch (e) {
+    pending.unshift(...batch);
+    afterSave.unshift(...jobs);
+    setSync("error");
+    flash(errMessage(e));
+    if (e.status === 403 && e.limit !== "0") { readOnly = true; pending.length = 0; renderAll(); setSync("saved"); }
+  } finally { saving = false; }
+}
+async function refresh(manual) {
+  if (!cfg || saving || pending.length) { if (manual) flash("保存が終わってから更新します"); return; }
+  try {
+    const res = await fetchData();
+    if (!loaded || res.sha !== sha) {
+      sha = res.sha; serverData = res.data; data = clone(res.data);
+      loaded = true; renderAll();
+    }
+    setSync("saved");
+    if (manual) flash("最新の状態です");
+  } catch (e) {
+    if (!loaded) { loaded = true; renderAll(); }
+    setSync("error");
+    flash(errMessage(e));
+  }
+}
+function setSync(s) {
+  const box = $("#sync");
+  box.dataset.s = s;
+  const label = { saved: "保存済み", pending: "変更あり…", saving: "保存中…", loading: "読み込み中…", error: "保存できませんでした" }[s];
+  const t = el("span", { id: "syncText", text: readOnly && s === "saved" ? "閲覧のみ" : label });
+  if (s === "error" && pending.length) {
+    const b = el("button", { type: "button", text: "再試行" });
+    b.addEventListener("click", () => flush());
+    box.replaceChildren(el("i"), t, b);
+  } else box.replaceChildren(el("i"), t);
+}
+window.addEventListener("beforeunload", (e) => { if (pending.length || saving) { e.preventDefault(); e.returnValue = ""; } });
+
+/* ===== 画像 ===== */
+function readB64(file) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => res(String(fr.result).split(",")[1]);
+    fr.onerror = () => rej(fr.error);
+    fr.readAsDataURL(file);
+  });
+}
+async function uploadImage(file) {
+  const types = { "image/png": "png", "image/jpeg": "jpg", "image/webp": "webp", "image/gif": "gif" };
+  const ext = types[file.type];
+  if (!ext) { flash("JPG・PNG・WebP・GIF の画像を選んでください。"); return null; }
+  if (file.size > MAX_IMAGE_MB * 1024 * 1024) { flash(`画像が大きすぎます（${MAX_IMAGE_MB}MBまで）。`); return null; }
+  const path = `${IMAGE_DIR}/${newId()}.${ext}`;
+  try {
+    const content = await readB64(file);
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const r = await api(`/contents/${encPath(path)}`, { method: "PUT", body: JSON.stringify({ message: "出品登録完備くん: 画像を追加", content, branch: BRANCH }) });
+      if (r.ok) { imgCache.set(path, Promise.resolve(URL.createObjectURL(file))); return path; }
+      if (r.status === 409 && attempt < 2) { await new Promise((ok) => setTimeout(ok, 700)); continue; }
+      throw httpErr(r);
+    }
+  } catch (e) { flash("画像を保存できませんでした。" + errMessage(e)); }
+  return null;
+}
+async function deleteFile(path) {
+  try {
+    const r = await api(`/contents/${encPath(path)}?ref=${encodeURIComponent(BRANCH)}`);
+    if (!r.ok) return;
+    const j = await r.json();
+    await api(`/contents/${encPath(path)}`, { method: "DELETE", body: JSON.stringify({ message: "出品登録完備くん: 画像を削除", sha: j.sha, branch: BRANCH }) });
+  } catch (_) {}
+}
+function imageUrl(path) {
+  if (!imgCache.has(path)) {
+    const p = api(`/contents/${encPath(path)}?ref=${encodeURIComponent(BRANCH)}`, { headers: { Accept: "application/vnd.github.raw" } })
+      .then((r) => { if (!r.ok) throw httpErr(r); return r.blob(); })
+      .then((b) => URL.createObjectURL(b));
+    p.catch(() => imgCache.delete(path));
+    imgCache.set(path, p);
+  }
+  return imgCache.get(path);
+}
+async function replaceImage(id, file, td) {
+  const it = data.items.find((i) => i.id === id);
+  const old = it && it.image;
+  td.classList.add("busy");
+  try {
+    const path = await uploadImage(file);
+    if (!path) return;
+    if (old) afterSave.push(() => deleteFile(old));
+    updItem(id, (x) => { x.image = path; });
+  } finally { td.classList.remove("busy"); }
+}
+
+/* ===== 削除の確認（2回押し） ===== */
+function arm(btn, label, armedLabel, action) {
+  if (btn.dataset.armed) {
+    clearTimeout(btn._t); delete btn.dataset.armed;
+    btn.textContent = label; btn.classList.remove("armed");
+    action(); return;
+  }
+  btn.dataset.armed = "1"; btn.textContent = armedLabel; btn.classList.add("armed");
+  btn._t = setTimeout(() => { delete btn.dataset.armed; btn.textContent = label; btn.classList.remove("armed"); }, 3000);
+}
+function deleteItem(id) {
+  const it = data.items.find((i) => i.id === id);
+  if (it && it.image) { const p = it.image; afterSave.push(() => deleteFile(p)); }
+  enqueue((d) => { d.items = d.items.filter((i) => i.id !== id); });
+  flash("削除しました");
+}
+function setCols(next) { enqueue((d) => { d.columns = clone(next); }); }
+
+/* ===== 表示 ===== */
+function renderHead() {
+  const sig = JSON.stringify(cols());
+  if (sig === colSig) return;
+  colSig = sig;
+  $("#headRow").replaceChildren(
+    el("th", { text: "登録日付" }),
+    el("th", { text: "商品名" }),
+    el("th", { text: "商品コード" }),
+    el("th", { text: "商品画像" }),
+    ...cols().map((c) => el("th", { class: "c", text: c.label })),
+    el("th", { class: "c", text: "状態" }),
+    el("th", { "aria-label": "操作" })
+  );
+  rowMap.clear();
+  $("#tbody").replaceChildren();
+  renderColEditor();
+}
+function buildRow(id) {
+  const tr = el("tr", { "data-id": id });
+  const date = el("input", { type: "date", class: "cell date", id: "d-" + id, "aria-label": "登録日付" });
+  date.addEventListener("change", () => { const v = date.value; updItem(id, (x) => { x.date = v; }); });
+  const name = el("input", { type: "text", class: "cell name", id: "n-" + id, "aria-label": "商品名", placeholder: "商品名" });
+  name.addEventListener("change", () => { const v = name.value.trim(); updItem(id, (x) => { x.name = v; }); });
+  const code = el("input", { type: "text", class: "cell code", id: "k-" + id, "aria-label": "商品コード", placeholder: "コード" });
+  code.addEventListener("change", () => { const v = code.value.trim(); updItem(id, (x) => { x.code = v; }); });
+  for (const i of [name, code]) i.addEventListener("keydown", (e) => { if (e.key === "Enter") i.blur(); });
+  const imgCell = el("td", { class: "imgcell" });
+  const checks = {};
+  const checkTds = cols().map((c) => {
+    const cb = el("input", { type: "checkbox", class: "chk", id: `c-${c.key}-${id}`, "aria-label": c.label });
+    cb.addEventListener("change", () => { const v = cb.checked; updItem(id, (x) => { x.checks = { ...(x.checks || {}), [c.key]: v }; }); });
+    checks[c.key] = cb;
+    return el("td", { class: "c" }, cb);
+  });
+  const status = el("span", { class: "pill" });
+  const del = el("button", { type: "button", class: "del", text: "削除" });
+  del.addEventListener("click", () => arm(del, "削除", "本当に削除", () => deleteItem(id)));
+  tr.append(el("td", {}, date), el("td", {}, name), el("td", {}, code), imgCell, ...checkTds, el("td", { class: "c" }, status), el("td", { class: "c" }, del));
+  tr._r = { date, name, code, imgCell, checks, status, del, imgKey: null };
+  return tr;
+}
+function setVal(input, v) { if (document.activeElement !== input && input.value !== v) input.value = v; }
+function renderImg(td, id, path) {
+  const box = el("div", { class: "imgbox" });
+  const file = el("input", { type: "file", class: "vh", id: "f-" + id, accept: "image/png,image/jpeg,image/webp,image/gif" });
+  file.addEventListener("change", () => { const f = file.files[0]; file.value = ""; if (f) replaceImage(id, f, td); });
+  if (path) {
+    const b = el("button", { type: "button", class: "thumb", "aria-label": "画像を拡大" }, el("span", { class: "loadingimg" }));
+    imageUrl(path).then((url) => {
+      const img = el("img", { src: url, alt: "商品画像" });
+      b.replaceChildren(img);
+      b.onclick = () => openLightbox(url);
+    }).catch(() => b.replaceChildren(el("span", { class: "noimg", text: "表示不可" })));
+    box.append(b);
+    if (!readOnly) box.append(el("label", { for: "f-" + id, class: "swap", text: "変更" }), file);
+  } else if (!readOnly) {
+    box.append(el("label", { for: "f-" + id, class: "thumb empty", text: "＋画像" }), file);
+  } else {
+    box.append(el("span", { class: "noimg", text: "—" }));
+  }
+  td.replaceChildren(box);
+}
+function updateRow(tr, it) {
+  const r = tr._r;
+  setVal(r.date, it.date || "");
+  setVal(r.name, it.name || "");
+  setVal(r.code, it.code || "");
+  for (const i of [r.date, r.name, r.code]) i.readOnly = readOnly;
+  for (const c of cols()) { const cb = r.checks[c.key]; cb.checked = checked(it, c.key); cb.disabled = readOnly; }
+  const done = isDone(it);
+  const left = cols().filter((c) => !checked(it, c.key)).length;
+  r.status.className = "pill " + (done ? "ok" : "wait");
+  r.status.textContent = done ? "完備" : `残り${left}`;
+  tr.classList.toggle("done", done);
+  const key = (it.image || "") + "|" + readOnly;
+  if (r.imgKey !== key) { r.imgKey = key; renderImg(r.imgCell, it.id, it.image || ""); }
+  r.del.hidden = readOnly;
+}
+function visibleItems() {
+  let list = data.items.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "") || (b.createdAt || 0) - (a.createdAt || 0));
+  if (filter === "todo") list = list.filter((i) => !isDone(i));
+  if (filter === "done") list = list.filter(isDone);
+  if (query) {
+    const s = query.toLowerCase();
+    list = list.filter((i) => (i.name || "").toLowerCase().includes(s) || (i.code || "").toLowerCase().includes(s));
+  }
+  return list;
+}
+function renderBody() {
+  const tbody = $("#tbody");
+  const list = visibleItems();
+  const ids = new Set(list.map((i) => i.id));
+  for (const [id, tr] of rowMap) if (!data.items.some((i) => i.id === id)) { tr.remove(); rowMap.delete(id); }
+  const rows = list.map((it) => {
+    let tr = rowMap.get(it.id);
+    if (!tr) { tr = buildRow(it.id); rowMap.set(it.id, tr); }
+    updateRow(tr, it);
+    return tr;
+  });
+  const current = [...tbody.children];
+  const same = current.length === rows.length && current.every((tr, i) => tr === rows[i]);
+  if (!same) {
+    for (const tr of current) if (!ids.has(tr.dataset.id)) tr.remove();
+    rows.forEach((tr, i) => { if (tbody.children[i] !== tr) tbody.insertBefore(tr, tbody.children[i] || null); });
+  }
+  const empty = $("#empty");
+  if (!loaded) { empty.hidden = false; empty.replaceChildren(el("strong", { text: "読み込み中…" })); }
+  else if (!data.items.length) {
+    empty.hidden = false;
+    empty.replaceChildren(
+      el("strong", { text: "まだ商品がありません" }),
+      el("span", { text: readOnly ? "登録された商品がここに並びます。" : "上のフォームに商品名・コードを入れて「登録する」を押すと、ここにチェック表が並びます。" })
+    );
+  } else if (!list.length) {
+    empty.hidden = false;
+    empty.replaceChildren(el("strong", { text: "条件に合う商品がありません" }), el("span", { text: "絞り込みや検索語を変えてみてください。" }));
+  } else empty.hidden = true;
+}
+function renderSummary() {
+  const total = data.items.length;
+  const done = data.items.filter(isDone).length;
+  $("#sTotal").textContent = total;
+  $("#sDone").textContent = done;
+  $("#sTodo").textContent = total - done;
+  $("#sBar").style.width = total ? (done / total) * 100 + "%" : "0";
+  $("#cAll").textContent = total;
+  $("#cDone").textContent = done;
+  $("#cTodo").textContent = total - done;
+  $("#sCols").replaceChildren(...cols().map((c) => {
+    const n = data.items.filter((i) => checked(i, c.key)).length;
+    const s = el("span", {}, c.label + " ");
+    s.append(el("b", { text: `${n}/${total}` }));
+    return s;
+  }));
+}
+function renderColEditor() {
+  const cs = cols();
+  $("#colList").replaceChildren(...cs.map((c, i) => {
+    const inp = el("input", { type: "text", id: "cl-" + c.key, "aria-label": "項目名" });
+    inp.value = c.label;
+    inp.addEventListener("change", () => {
+      const v = inp.value.trim();
+      if (!v) { inp.value = c.label; return; }
+      setCols(cols().map((x) => (x.key === c.key ? { key: x.key, label: v } : x)));
+    });
+    inp.addEventListener("keydown", (e) => { if (e.key === "Enter") inp.blur(); });
+    const li = el("li", {}, inp);
+    if (i > 0) {
+      const up = el("button", { type: "button", class: "mini", "aria-label": "左へ移動", text: "←" });
+      up.addEventListener("click", () => { const n = cols().slice(); const j = n.findIndex((x) => x.key === c.key); if (j > 0) { [n[j - 1], n[j]] = [n[j], n[j - 1]]; setCols(n); } });
+      li.append(up);
+    }
+    if (cs.length > 1) {
+      const rm = el("button", { type: "button", class: "mini", text: "外す" });
+      rm.addEventListener("click", () => arm(rm, "外す", "外す？", () => setCols(cols().filter((x) => x.key !== c.key))));
+      li.append(rm);
+    }
+    return li;
+  }));
+}
+function renderAll() {
+  $("#addForm").hidden = readOnly;
+  $("#colBtn").hidden = readOnly;
+  if (readOnly) $("#colEditor").hidden = true;
+  renderHead();
+  renderSummary();
+  renderBody();
+}
+function openLightbox(src) { $("#lbImg").src = src; $("#lightbox").hidden = false; }
+$("#lightbox").addEventListener("click", () => ($("#lightbox").hidden = true));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("#lightbox").hidden = true; });
+
+/* ===== 操作 ===== */
+$("#inDate").value = today();
+const fileIn = $("#inFile");
+function updateFileLabel() {
+  const f = fileIn.files[0]; const l = $("#fileLabel");
+  l.textContent = f ? "✓ " + f.name : "＋ 画像を選ぶ";
+  l.classList.toggle("has", !!f);
+}
+fileIn.addEventListener("change", updateFileLabel);
+$("#addForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (readOnly) return;
+  const name = $("#inName").value.trim();
+  const code = $("#inCode").value.trim();
+  if (!name && !code) { flash("商品名か商品コードを入れてください"); $("#inName").focus(); return; }
+  const btn = $("#addBtn");
+  btn.disabled = true; btn.textContent = "登録中…";
+  try {
+    let image = "";
+    const f = fileIn.files[0];
+    if (f) { const p = await uploadImage(f); if (!p) return; image = p; }
+    const item = { id: newId(), date: $("#inDate").value || today(), name, code, image, checks: {}, createdAt: Date.now() };
+    enqueue((d) => { if (!d.items.some((i) => i.id === item.id)) d.items.push(clone(item)); });
+    $("#inName").value = ""; $("#inCode").value = ""; fileIn.value = ""; updateFileLabel();
+    $("#inName").focus();
+    flash("登録しました");
+  } finally { btn.disabled = false; btn.textContent = "登録する"; }
+});
+document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
+  filter = b.dataset.f;
+  document.querySelectorAll(".seg button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  renderBody();
+}));
+$("#search").addEventListener("input", (e) => { query = e.target.value.trim(); renderBody(); });
+$("#refreshBtn").addEventListener("click", () => refresh(true));
+$("#colBtn").addEventListener("click", () => {
+  const ed = $("#colEditor"); ed.hidden = !ed.hidden;
+  $("#colBtn").setAttribute("aria-expanded", String(!ed.hidden));
+});
+$("#colAdd").addEventListener("click", () => {
+  const inp = $("#colNew"); const v = inp.value.trim();
+  if (!v) { inp.focus(); return; }
+  setCols([...cols(), { key: "c" + Date.now().toString(36), label: v }]);
+  inp.value = "";
+});
+$("#colNew").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); $("#colAdd").click(); } });
+$("#settingsBtn").addEventListener("click", () => {
+  if (pending.length || saving) { flash("保存が終わってから開いてください"); return; }
+  showSetup();
+});
+
+/* ===== 接続 ===== */
+function showSetup(msg) {
+  $("#app").hidden = true;
+  $("#summaryBox").hidden = true;
+  $("#setup").hidden = false;
+  $("#sOwner").value = (cfg && cfg.owner) || DEFAULT_OWNER;
+  $("#sRepo").value = (cfg && cfg.repo) || DEFAULT_REPO;
+  $("#sToken").value = (cfg && cfg.token) || "";
+  $("#setupErr").hidden = !msg; $("#setupErr").textContent = msg || "";
+  $("#setupNote").textContent = cfg ? "接続中の設定を変更できます" : "";
+  ($("#sToken").value ? $("#connectBtn") : $("#sToken")).focus();
+}
+async function connect(c) {
+  cfg = c;
+  const r = await api("");
+  if (!r.ok) throw httpErr(r);
+  const j = await r.json();
+  readOnly = !(j.permissions && j.permissions.push);
+}
+async function start() {
+  $("#setup").hidden = true;
+  $("#app").hidden = false;
+  $("#summaryBox").hidden = false;
+  loaded = false; sha = null; serverData = null; colSig = "";
+  data = { columns: DEFAULT_COLS.slice(), items: [] };
+  setSync("loading");
+  renderAll();
+  await refresh(false);
+}
+$("#connectBtn").addEventListener("click", async () => {
+  const c = { owner: $("#sOwner").value.trim(), repo: $("#sRepo").value.trim(), token: $("#sToken").value.trim() };
+  if (!c.owner || !c.repo || !c.token) { $("#setupErr").hidden = false; $("#setupErr").textContent = "3つの欄をすべて入れてください。"; return; }
+  const btn = $("#connectBtn"); btn.disabled = true; btn.textContent = "確認中…";
+  try {
+    await connect(c);
+    storeCfg(c);
+    imgCache.clear();
+    await start();
+  } catch (e) {
+    $("#setupErr").hidden = false;
+    $("#setupErr").textContent = errMessage(e);
+  } finally { btn.disabled = false; btn.textContent = "接続する"; }
+});
+$("#sToken").addEventListener("keydown", (e) => { if (e.key === "Enter") $("#connectBtn").click(); });
+
+setInterval(() => { if (document.visibilityState === "visible") refresh(false); }, 60000);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && loaded) refresh(false); });
+
+(async () => {
+  const c = loadCfg();
+  if (!c) { showSetup(); return; }
+  try { await connect(c); await start(); }
+  catch (e) { cfg = c; showSetup(errMessage(e)); }
+})();
+</script>
+</body>
+</html>
