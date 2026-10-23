@@ -410,7 +410,19 @@ body.refmode .rcancel { border-color: var(--accent); color: var(--accent-dark); 
 .nenote { margin: 0; font-size: 11.5px; color: var(--muted); }
 .neempty { margin: 0; color: var(--muted); font-size: 13px; }
 .nelist { display: grid; gap: 3px; }
-.nehead, .nerow { display: grid; grid-template-columns: 34px minmax(0, 1.3fr) minmax(0, 1fr) 90px; gap: 8px; align-items: center; }
+.nehead, .nerow { display: grid; grid-template-columns: 34px minmax(0, 1.3fr) minmax(0, 1fr) 90px minmax(28px, auto); gap: 8px; align-items: center; }
+.nerow { align-items: start; }
+.nerow > .nen { padding-top: 9px; }
+.neparts { grid-column: 3 / -1; display: grid; grid-template-columns: subgrid; row-gap: 4px; align-items: center; }
+.neparts.multi { padding: 4px 0 2px; }
+.nerm { width: 28px; height: 28px; border: 1px solid transparent; border-radius: 6px; background: none; color: var(--faint); font-size: 14px; cursor: pointer; }
+.nerm:hover:not(:disabled) { border-color: var(--line-strong); color: var(--red); }
+.nerm:disabled { visibility: hidden; }
+.nerm.armed { width: auto; padding: 0 6px; font-size: 11px; color: #fff; background: var(--red); border-color: var(--red); }
+.neadd { grid-column: 1 / -1; justify-self: start; border: 0; background: none; padding: 0 2px; font-size: 11.5px; color: var(--blue); cursor: pointer; }
+.neadd:hover:not(:disabled) { text-decoration: underline; }
+.neadd:disabled { display: none; }
+.nec .nek { color: #5B3FB8; font-weight: 700; }
 .nehead span { font-size: 11px; font-weight: 700; color: var(--muted); }
 .negrp { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 4px 2px; font-size: 12.5px; font-weight: 700; border-bottom: 1px solid var(--line); }
 .negrp .dot { width: 18px; height: 18px; font-size: 10px; }
@@ -1118,6 +1130,24 @@ body.mode-withdraw #xlBtn, body.mode-withdraw #colBtn { display: none !important
 .wtb { width: 28px; height: 28px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--surface); cursor: pointer; color: var(--muted); }
 .wtb:disabled { opacity: .35; cursor: default; }
 #wEmpty { display: grid; gap: 6px; }
+.wviewbar { display: flex; gap: 10px; padding: 0 24px 12px; }
+.wvbtn { display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto; column-gap: 8px; align-items: center; text-align: left; min-width: 220px; padding: 9px 16px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); color: var(--muted); font: inherit; cursor: pointer; }
+.wvbtn b { font-size: 14px; color: var(--ink); }
+.wvbtn small { grid-column: 1 / -1; font-size: 11px; }
+.wvn { justify-self: start; font: 700 12px var(--f-mono); background: var(--panel); border-radius: 99px; padding: 1px 9px; color: var(--muted); }
+.wvbtn:hover { border-color: #B9B2EE; }
+.wvbtn[aria-selected=true] { border-color: #5B4FC7; background: #F6F5FE; box-shadow: inset 0 0 0 1px #5B4FC7; }
+.wvbtn[aria-selected=true] .wvn { background: #5B4FC7; color: #fff; }
+.wvbtn[data-view=archive][aria-selected=true] { border-color: var(--green); background: var(--green-soft); box-shadow: inset 0 0 0 1px var(--green); }
+.wvbtn[data-view=archive][aria-selected=true] .wvn { background: var(--green); }
+#wapp.archive #wToggleAdd, #wapp.archive #wTaskBtn { display: none !important; }
+#wapp.archive .wtable { min-width: 1100px; }
+.warow td { background: #FBFDFB; }
+.wawork { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.wachip { display: inline-flex; align-items: center; gap: 4px; font: 600 11.5px var(--f-mono); color: var(--green-dark); }
+.wachip .dot { width: 16px; height: 16px; font-size: 9px; }
+.wasub { font-size: 11px; color: var(--muted); }
+.wamemo { font-size: 12px; color: var(--muted); line-height: 1.5; max-height: 54px; overflow: hidden; }
 .wops { display: grid; gap: 6px; justify-items: center; }
 .ob.wedit { border-color: #B9B2EE; color: #4A3FB0; font-weight: 700; }
 .ob.wedit:hover { background: #EEECFB; }
@@ -1179,7 +1209,7 @@ body.mode-withdraw #xlBtn, body.mode-withdraw #colBtn { display: none !important
 </head>
 <body>
 <header class="hd">
-  <div class="brand"><button type="button" class="logobtn" id="logoBtn" title="はじめの画面に戻る" aria-label="はじめの画面に戻る（商品情報完備くん）"><img class="logo-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbYAAABgCAMAAABGx6fEAAACWFBMVEXe397h5N7soFmgXCie2fkiIiL2zaOura35rHLN1t79ZwOnp6b63bP6aiOS1JTY4uur8PlLr/hfXlydnJsKb/8itf+o26j8poeZmZpQRzv1sZBlsWWsrPKPzfMsnOphufn9ZFD7oxl8f/s+s0BzynT9xncnRFViYWAkOUS2iVL9yJ06rDtUKh6wc2//VVX8p2PsPC/9sIf//wAPZaQA//9hx/7xsqhkLSRBr0KYcE7/wmhi1v9uyv2f4J/8q34fNngJcK5jpLUjIyMAfwBsXlBfe4x21f2bNSmxYxWAf4CD0IT/uCoAAKolircA/wB+gH52vPGqAACDfHShoV2AgH69vcCkzOL/0HI/QD8Af38EdsgtwP9/P39/fwBVVap+foB+hYpmmcx7z4C3vsSAy37/Pz//AP/Fv8UAAAAUFBT9XQz+/v4MDAwAjf39YxEoKCg3NzYCkv1HR0d/f3/+dyxDtERVVVRnZ2f7tWT4+vmXl5eqqqp3d3eJiIjJdjUjtf22trb9h0nP2uPY4+1bWlqpqaksqPw+Pj5nZ2fV1tb7Rjj9lAMWo/2mpaVVVVX/AADn5+fI092WlpXJycn/f3/9t5D9to79pXVRt/x0dHTGxcb9p3r/qqr8jQH8mWb/fz1SxFT8mmaFhYT9yKj8kll7enqMjIz8i1HwqVj8upYAevBlZWV0xvpoxmr95NP+qjP//3/R2+LQ2eLP2eLxlFN/v/9///9oaGhtxPyP1fyoqKjS2uP907UAAP88sj3+gTv/qlUdtP22t7fR5u/8rIREOzNVqv+aViWyovEjAAAAyHRSTlNVIe7/Wf1gEAWYAp4s/prmFOHeYQMDaKfR/WwDCZf4sPn/Av3anf6v/v+P/f4FA7L93wH+AdAGBfvz9wShBHYEBAYEAgbqd/8DnsYDA/8BpHoDsASUVtgF/wL//wQCA5//BdH6twQBLAD+/Qj9/v7+/f74A/7+687/KXEDrY3//kzy+v7VVvoEtjL+/f5nAwEr+YY4AnCKrtHJRpUD/bQE/sioTdGadtb9WP7slPUw+wJurM73BAIFp26tMEwB/P0D/28ujvsD/8DgoA4AACX5SURBVHja7Z2JfxNHnuhbwhc+sLkhwxEIJBmymdzJZDLnzj173+/cfe/t8UqutrrVEhKSpSAZyZbAsoXvCxvbGEhszH2YI5AA4d96v18d3dVS22F3IMO+jyrBllstqVXf+v3qd1W1Rp5520+q7Xk37Vm+Gb1Hl37YRr6udut/Kmz76d7e0NGH5Ea1X/8TYdtPHnZ3hEJjdCutduwLiY3e2HX9+tafbt26Zev16203KON0ndT0dnR09C6RrdWOfeGw0V1bt1QcvLe1jW4ht0IdHaGO7hrSVu3ZFwobbWOSRONtNSu7l27dWlravVLj49K2hY4BNlCTR+m9qjn5AmHbj8zow5VbG7u7e6GFQiH42d3dPTa2VEMJhakNxS20t6omXxxsYWBBawAZ4OpgTf7GR91H997q7WDi1tG7AhNdtb0I2Ci4Y/Gase6QwIRNPrIh8sehDlCTVS/gRcAG0OgPu23p8m42QlST96q9+4fGBlYih7Y2t5D9u1JNXmporrpz3y42ELWasW+E5uLXXRYsacQfQ9UO/xaxbSX0Vvea4uXxjDtY0k98dXVga1Z7/FvD9lPyEETtqSVNqsklRU1eIocu7rvoX67K27eFjW4lK92e1EKOEempJtvILvEezaTu4qlTp0746bv91T7/NrCBMbK7u8JWDIGLvXFs49jYGDje4Md5WpVjdAuVE9tbJ06cOnHqYjP5m2qffwvYgNpSr3syC/V2jy3VxHlAi1Iar1m5NVaODumCmvxaqEh6EbCdQmxT1T7/FrCVUUM5G1uJ8+fu3bNdMxpfuRWqVJM1nFsDqdt3CrGdrxol3wq2reXUuj+ogY7/00+u36Dv4wnvU8zhYARS667Qkr2/4rHJRuJHaKdOHCR/Uu3y54/tOqlxwegdq7GfC4c7w9SJfF1fqpzgjj5kRskU8V08xaY2+i6zJGlDQ9WifH7YdpG2bpd+XOHzWalEJbCeMGXw7pGxMmyh3o0rvBwIdKRL2B7gj+9V+/65YKPhXffoRpcDHSd/SmgiZkGLJVO5wbgNr43Gu90z4MZboE3Z3Ef7KdeRF+PvXkLZI3R+OF714J4Dts4+ZgHuVUncouRnZDBmBnRdDwQChmlai8lUscAlryZUzowIOxLMkItC2B6QS42E1mUikcxwlduzxkaZZR+n2gfolPUyt7p7dxyUZtpCYoEA/yngZUHyCjXdIo8jmW1pk7IopO2i710KqlGbjbRDyyyDX1BtzxAbdHchlUVV+Cq0181aaK+//thKkVJUB2Jm1LJMQ7BjomeYlvXee/8NmH3wKx++xU9+Vu8YLJdIs3/fiYt15EEjWR6NBAFasD3yEsx51fbssIFSS1mMh2xcsPQYzaN8JScoLaXPJmNRk8HTbfGrfX3T+GupoqYYLAwevGPdwbvk0iUynAm2B7G1ByfJTLX7nx026OOYIVShpIY/9Me5ggmilnDOHMylAJ7lwAtwyYtm86nES47BEm5m3tsUuXufQwOBi/iqnvezxBYmSeh93bDKWjRFU8AnD2dQSsNhG14hN5CMWYrksTnP4HPehIT30ZvhBjKJ0xpCC94frk5tzxJbJ0mDTAWsRKFQKsXjcWo3AjwDZo7YwEADqvBSyayUPF2BF40lExNcbfaNBDm0zOQyz5tW27PBBpZ/DPo766nAYgHd3AVg3UrVJXlFUJvWToTnWCy1JsJbyFHiy4C0RTKP4qRK7dlho0iEgo1vpslNJmFh1vDR9U+uU8Q2WI6tAh7lcx63NgOOwWJk06R5NnNuGIZE47esIYW6+P8QG2OGlr8R0KPUCTfu2nqv7QbdIqRtZ6ECG3VMfdqpwCvkEo7BgjaNbiXwOCEzq3randh+//5VLv+bzvyPfCCdwtb/AmAL9+DlFGMWGpF6zH7+hszN1Oyu0QCbVSo3ADvtHzYwdc6LpxML+SxYLCh0ZhEOPVi1l8Jlvz3OoF4t7P02Tuv7kFIf/ZtVPzHsFkt1PvdoD5SohDfWmf6ZKfEsHZqZmRnifwwNNTY2ztBnho0px3TSMoUpEZV5sa8J8d0aW4nHl/aEQt2v6rpZcvdKJ74wR8u+A33Q/5t/+If6Nz9S9GYSLB3dWksO4EMH0+n0RHy1Dgmv8VLXX3EqDNh+IXva36XTmlbx4fwTJ+yh+GYFb+p5mdrdu3eXxbuv2r737poX+Xtjw7eLn82aAeahGbVMplgX3SAP9+7p+Dy0B350hDpeBQuTqkMToW2LmWY0TbynPPInDR/W/4I/TJigKVOkp2LOsWUmDQ48tGiOdHoNeRwc8cpWKpWNmhxGeKIJBXPCEu+ragiU3VJMfqAE7mpeHT1E5jMRbLOrSCPtpyP+ybtUIB6enJwcQTGA/0ZGRyeHn0WqWGPfGATN4HJmZgeizCTB77Gf1CCvjs/xX+jolyBtlvOhDFqOh5atFHV6iTbSg/63DtXVxeX36m+ohyfnVDlmJ/a5v2+Ue/cwtbqHvKQWT0atqFXZonNUUbDxKHsTa9COrlKMyUGLuec/8sdkzmAfiR/YBweKsWhUfgA8iIKvyt5iqGFGtoYZeq2dtcijmYbfOMcvOVxHI8FgJDNJGxoe0NlIsCUIiBsaGpb9GGmITNMHDVO/Nza4sDkuaAEjujBB0TszEtgN9H26EWgdDaGkfd5bhk1Agx7a+XFAr8WhHJbXfXDfiRP79l28eNH/1kGkxzqPxC2QVvfc6JpI4jJObWoeEwx88KIacVNbIGafJvxO9h0KczHe5Jgc53+O5+RFJPkHWvzPolX+xkYSv9QDV5fF7zPnsz047e7KRhmBjWfYCZFJvGp4jBFYUKlkPoIxovZInPze/o9G+2jS4ImYWBGvvgdjIQuEC1tHx9GjR78Mgbj1fnn06Ku2tKAVQItZGKu1684fOeJ/DLNeUugqXvBzAmt+TnB65/0Hcb6iWSCStrUpxj6jUTa8o7yJmFqARWiifMhHo7EiGw89ZMCwgzBlTTeKcswo2NBhcecr5OlWARRkIplMioFijufzKSaU5WeaYDn3g6Z7NImN/dweEdgyj0Yn7TYsAwgNpI7hCbZP3x0Z2c7SHe3B7SOPHo2yqF57ZPvIyDx5elPXa0bX+kgKe8PMpkqojzrrSQ4MkxiXhI0gY9i+RGhHj77O9BdXh1zSAJr/iB/AgcAFokXsXHgeaxCchvT2+SnGOmH42tMIdFzSKBMau7dczeKvoeOB1VtSzlr1nWmTkzwrpbeyAWXQj2XHkqgNPMbDm2Q4EwkqDRMY7e1Bd8MMItOT3yOTQUYqeC3S0mJHzuFhkL0OnmnBkx+U8+nzMoDC3qaYxtxr3UpT1pHY6RgwRmV/HVOfDBcjx7Bh+IT9xyTN+PjID0DUzvvPX/v0yR/B0EyWcLgP0bf2nShr++oIYlOCY2H2yU/Vxvn3ij0FNrRImLTpIG3mameDAq0QLd3SzMrrgevFAHh7u+jydgGsvazBkfvzmLl/l9BrkhR/mfJC5/xMuWFCPY1NOAvsXNJXiS1hMFVAesLClcTehCmojfCZTWmIjXX4YIyrR4CG7dq6J+vWrQNuAQv0bBhMqYP+ixf3udgdBAMgL2dNie3pqHHZZ9QrhLEMG50oFuqEktzRFHUygvKF/LWgqmk0UIlNfXuhJEEuR9Wu92pC4EbJb7DmYlnoyExk9RdUYIPeSMVStEywsKdNKxX3kLYk+9JSPmk/BkNwkP1vurvDETbWahk2ykw+B5p/HWtP/P6dMMZjg3zy89XVHTroB3oXGb2LzeQXzNg562CLP620SWy2CJiPTdFc2EDhW4a5Qxw0AovjVhbapqghNF52E/87QdaSNpNZkoZUkmQ2uDY1IUbBWXTkZsgjge2diFvA1sLGvp1uzJXJWxiP6kZ0oFxPagzSZnkYXvTS9o+ZUPyEC9uXvS5sMTHp7zyiQHsCwub3wx8f14IxjVHLgnaHb5ZAm+sOAr0f3CVDPYit1nbcqDT4VWHwnOMM/hqJTY9q6ZcmJtLYbL2WtNWubsljuhmPN2HbwY/oVtMctKYmGNRhmCmVj8KkfVa8mdHEfLZFpmph/L5/RmLjv9ncFqzUlBxbPz0jLJZD953XVGjXDKgkNWiBlwPcFlw0O8mEKWW+swxbVsnGwIu2v9zyNlz6Avkp+cs9n3eAFWlz6+bYwojtuz9QJW3dp2CVHDl//sj5nQHwqKnW1dV1srV1/XpN4iPN0PULAbRRe2wNkF5kEmM4UmR6HLCS3Lq3pS3qXH7JcmFj8mvZBqcxkPcSXjPVBzPCYN6yNknBBJM1X1/gShsUQmrTpqxL2r5BSfJ01BnANtXvi3ARi8SH0S0Xp6B/LmAH4WHmM9Uk6ZTmlh5IqpG6PuGgBMqjFIBNmXCG+qn/+NvH3+Z49tOabrD8GbYvj375JcOWF9L2XcTkZ3Mah+ZnGM/7WQ+u7zp58mRX1zFo8Aj4XS6gz4CuRbIstFSfTg9ITE31uXSuvr60KEQgO5FL19cX5Om2tNGbN/v6+n5xs/7moBtbySVtAX2TtxqO8QgVNGGcWviYSmwJfFfdNknahPi0RzLe7T7HyqTtAdqRDM4ZGFR35w9xbpHh+c/mt3P4kbrP6prdQuW4Kmo+s1OOysq8i8b6MiuiaGT7y28fP378j7ihf4/4xkISG/y/pwwbUEP1uO/8EdHO+z9dV8uwHTvptC7k16WRerR+VGz2BUoewuv9SoiLOeG2smxsiuurYgMjuAybZekBDy0cw8AQBtJkbIiJdXZCmqBFw/Hb0oiNd/dd6t1GgraSHOL+NQPluzs/P899uPbgyHzdXeHDRepYQFPphXjM+TwFWx/5W3E4XzG33YMxhpYkZUXfLx8/zrGxqOQW4qtRrMk9vHu4kgTx8tvqUUL7lGPr813honYMleVJ9m89YCsKj9C54FIKoxa2UbfIYhhR+RXwr7kJO7glv5yVdJqhYMOpAENjjh0P5omqdQ3+F/iBPXSxclbd8VhgS5uOnUJtkyTS3Dw88tKPf/wSNvFrZGRymD5ysDWQYeGMR7RZFrkU8xs+bBHTGzy8P0mHnE7YZH+cEu7BYN5qwka0n9Cs1JIgbIxay68Z9U6WttnLAiU2tgV0FGxpW7fuGrptaI4waIBN6GHfHe3y+itXrl49yfm1Xibckc+6zNuo2+ctN+4YpKLg9o1+G6qBgI2tFt96run2jh23b5tCTJtuY2sqFrysWH2RHzPOloSQMmuI+M4IJfhOxKMFg5l3uFpsh7mtkQrRbD93aM35MOITS8ZukkLUce6TiknSwxShp7BhlGSBPcHUPRe247+2DfVPrv+lG9tfuLA9eXJekTQFm6Y99PEP8D1EfuvX+6jApgT06eJTeACor8NPhS3MxFlf5Lqulr25Ue5oGwb8s3Lx6GrYdPjqSdPABi4TDf/PtlnR09davBG8w40Q8NtmMO7IjZQz/rX8PCwTneJs0vYAYoNE7R7hd4KirsAWZkMUI8RDJM5mtuPH37b91+siLCmxoS1uYzv/6ZN1DJtfQkNs+NmXuSkCuC5rBZ9SXKSmAMIyevgN2MziU2PDyVPfxLEFdrCMr/d7xpQITbkBgw4AWChoBmvwpg/IfIaptu0ZV6wjaDMYnWWPMz5F2NrPvbOGkw7YWEiF9mD42v6iCdVt49+GWVA0XBlKZsEKnAlxauPYjtdKZfY1advzufS5/4xhC9vYUMj8DN+nZdhau6QpAvi6uq4CPx8oyQmLDxB5XQPG0zjbdmAlucZJcF1CqwhsgcAOcy0JTpm2/NWKibBJHAJ3eyfzuE0rlsPUhe/R6PToSPxlbw7Babp9dnp6tJmwmU1i276G1yCwUZaEtKfRnErNDi+4rBQ1TZrncZJLZFkoScAmYsZfE9+ez3u/ZOD++59x3RnGqN93jzjtWgU2sCS7XKZk1zHQkqRQhk3qbiX+ZJdAOwaDwAbC+qpqQqgUZF43GVCxrZowYN9uIibmuyL3AqITBUt3x87wjdOkTxgPNLMKg1HRlw0sZSOxafeZY+7dWmZBucEVpxx9Y024fDNHF22iXvk2Joyckpzb0JQE4zLMmO8R/nZv73s660KGzb86tgTpe3il9SS3RZgpydgVCE+4xZ3oVkoGnWB0C4L/xR7xduRKJP/gcxOW4dnMaA6eBhMqqzMpE7ouuyo1GFofwdfWuanI+MGhGi+djZbvVMNMY2NDQ13GyyaJnFluaGhsnHkwNYTRSydWPBxBecuMPBopb49GMd0dJjTpjKxsWbXHz0lefv2+euqVJgWritmY6LY52HICG3gAfDl96Kmwgf0M1hGhYEpyW7KL8Wtt9eEcyzyLznJpi8ULPLCkm5pQnAMwvXwlAhUJJ29ePAstkUicTQ0MJPABa1/JgCoTlzlTBDvoXCyWfS3P22vQxMNYLIVWtsbONorMqIRPJoMezrmupuOpr5m1edbq2IPmZjtNSqXPhrNahrsCwXN0ZHp6+q1pp701PRm3w5ByHOXLosjcBxUXUJkC0MRcj7aGM7n92lZNW8ADwJqE0J6NG38JQlBEbJuNtbGFRalN87YN0DACocHc1smCkI4PomDDDKpwkxZEWCph1o7b2GAcFIoIaHOxWNy8uZjj7z9RZC2XSAwMDBQnSMliUsbjeLUpj+IQ1kSyTzgfO0VsJHq2ZHpjw2WUn5W3uro68WiYt7tSjXKJE9jaZ2c9dOT9+aE3FRNLN+ZomWdmx7WMpnQiTStDyXDkrMETaUPCcTvewma7HlZw17axe+Pe3TVxyoqSObbVpe2JEI7vELrhwoXTpw8fPn36wDbFonXS2z+xsSUnonY4QByzTHv2AgPrJk259aN1lmJOg/vP8tgC9rtuNBky3wZaCHTt48d2vkDEOAvMHNLLZlNTM9XpUneK2PyRp2mjlEw7SvKcME+uRdrt7KrM8bS3z4KStvO0upkiFRkbaeqaUfiWi+mK4BbG6y1eSYfLdV+WpmRMFHsQH3WiFNjpTNrWsZy2FzZmr3+HaBdOv/LG9w9De+OL0wd85EfyHWy7yHEnZTgKPRQ53+mqJQkOmV7mFeQwzsFLYGRuzChm4bG53pC1JCLK71F54mmW3lawydAKSttIpP1pWmTEDpHY0ga/gzJfoNDDgKXttOpWsSI/6lj/AdsyqqjcQilgQsIyAKopyd9taxtMVD4isDG1q+/0H1kd24/ItguvHLbbF19c2MaGS4zJjsD2PxRLUloKtLMcEFOSpLIe4bXKXLQei4N05YXQGANkwtsvxNGxNjYQ2QKf+hDxqCsDEFw1CzBK7kbk5AbYRhxsipdnx5llwk8vMyGlYvKcYmm4h8q5zQmU4Hrql/wvv/wyRiXjWKTgQ7viKhjwrVftCh6wScC2CKw7X4Ft3WMWQPsRyNoXh9X2xoU65JZX86SOtEl27BKyjvtpz20ennb+q0q3DHO4BZoWEeEBUOarGJIJXv1Xgc1xMLKk3pJ+/HTwm0UNcYyiAyCTahkyyS1JXi00zae9M29lbGmTcRrEViFsRdPLeaUyAq/Z4QvuUNF+QrXtjzYxwaqnvqvHZEj4mLZJBjXDJJ6EueexcN5kjOQJK0s4C2qUqrJ2+PD3D3//iwswUFh6O7UaNmOHlkunc9qiHQc27MKPWIXY5Jsq3TLu4cjKrbWxpd3DudYIuGpJzGKC17OdRWy2uAVXC1YJ/200mBHWZIa8xV51jcnXdo1VNkQOaTx7w7DZfvbmCiVZOU5Fhj+BlVphUZUsAyX4iikRkIDvVk8ut3bJ1orYHvOVG6BnJ3DJKWpKv8D2BCQtsDN5B82RDadVaG/gz9Pb4LgrvW1jkzFcV5Z08be5orQtnJyN42bnv1KWvMroFCV9nQq2hDhl/PZtFlFuGreHbj1JzyWTC1Eh18mFhdT/LSgOgB4dl8F3UnffA1KlyozUkSHfI83GNi2xQWuJtIhsaYswWD5y1HSFSaKG/eTEjZFZSmNGrTUXB8niJ+aVvDOdenPot6xWMsywgdOF4rY+HnWqU1FgByzUlEDN38LVYwBtNDYKLqiy9sXhDQfg5wXKi9wWKrGNC5tdqUlAHZ0wHWkT3y8ajZpl2LCWUkgthqlVbJtl4g7syZ2WU3piMu8T25xtLkJz+222RULp9vv30dPORIJqqppjY0bk/Uwmcv8Ry7lI3y1DzzG+fgnaVcVwjvwVGYzqauS/U8XmZOUtrqv1xyUcamgqB6KDfOkGt1uyStgJY/V50odKsuvqlfWX7/i4M+ssAYBPKTFN6T+C1XY6QrvDXvsdsu00zmxCT6I54oOpDsSNBSHzlYmJGKlMBRipzoRjEgppm6M0Lk6V2IyvqF2XumkVbAE9oFapcB+llIqNj4s+McbHx5O+wde5dCvJAYMPsvgyNF98O4tWtQcnfc3xa5xDcGS5WfP5lpe5O0hnHGzsQdAvgDkuAP53hjnUSsZmXOHWSR7aAygWF+UkOwvgvYoOS0psJUt1hDvpoMWGYJj4SiyA77uj+QQ2O4sH3yedRU3JJW2uJPLVQke+cloYI4CLHdhAoB89seU9KiaNOVKJLenM5AIbm6fksdhq2Mo8NIy/ecwecWHL7FCS29gnVK6smeXYIj+Gx+d4KVBk2FVMTpm0MZMkzgzJFj83JCNB+VtYkv3wxvGY+um2nuxz7CX4RhM8nWQWnGvOc2yszjsgCqQIra9HyWKmZNg2JVuv+FyBYKEpUxbzTMHVtYsMABtSu7DtX06zX4La4QPEnd5WsUUrDYd/8sC24EiWg805VqEkxQxhuGuLuElS4WiYIsBmaI4xGxML06amppo/lLHkyPDUED3H5Qcef/ghoXUaN8MdbOc0hi3yDpPP0To/O3tk3h9sF9VCvIbEblEUJ3clIgZMww42wotd8PI1pQdjVBZu+LSozo39O9KSPHYVqxek+7Dr+pYtW26gdBZipvE4WVIqQ37OMJ3eQOjvmIYEnfmGwIYFw9k1pC0KykooLpCshBEox+YYYF7SpmLTVZOk6TbW3d1u2uFgy1ViW88PmWn7OdMpfcesjCgzjjSTfgcbaaB0NpIZvSvqtYWSxOw2PP+yn503PczKv1pGX+IVDudk7Y8TTNajaS42ToidWYkcW8Aq9MiFJkBQczKYKF7I5M7lKyeP/S+d21tXjklD8sqgyVYUhW9c3+IqzUknYCDctLdqkkryALzbgQNM1hg1xJbmdep0NWkbwOOCQbLTA1s4LBG9Jue2BB4TzlaZtCXstSC1PP5Vq0pbhVrW7KLEccfJvSnW0TQyp0wWghOJrWWYfMi87GBktpkMDdnpnTOjTIlmZtW6ZV4OFJTYMMAx53Dj0RLF1Y6hYVx4XUqbjB6AeGmKV45VrjfoehSuYzuY0qwn61tFLU/rHRo1FxN0Pw+FryztXXoITnv9kLI2pL6+HjQWKkmMah0AZ70OqB3gnjeIH5nYqeve2MQFpVKpAZFjXvBSkq65jSPYbJPWs8Rb2rz8tpKl1gCxFSIyC5EetHV2rMQX74JK0zJBu4y1kcgi1shwf0M/pmgAR4b2T9nY/NeY8TE7216+5gPf4pxYiYopN8Od3g7Ly9bNCYwkSrckNmA5BpW95J7XlN8kd5hsHftnDpsWWpklqT3E5fgPmYKM1yzh1sih0EYf8V29yotY7/hk7QH5EWhFxul3eDq3KtFC2UbYJVhrYMNSD2kPzJUGKvy28dzmr8rntrnNCZnYr8TmXVrEAmwJy7TsVc/gIlhnRVWiqcQmUQLCuDQ4PmoHJlEv4lYd3KxHk2SUQ4ksg+TRjIiS8BDy9lkZiHQFkyU27IoBx0czcXUn3aRLYQuziU71SMSEpymhSyYIvq5j6KmdZH9iIFnguP5TVpcokPH7EN2iu64e6+JBlK6rgBf57iJ/zv227x/eQAVBtChPOz4EfQpLMmDsNALlShL3p5ExSem3KaRXkzYnc6A4AIQWBktyWaJWKFDptxnqrKfvLPaTeN10Rk2A9l/ilgdboDH71qwgmomTZqLk3FCH1p0Rhcgt/Df/5WArK0xAB27CtCOnbH1YWbbXOAumpqaso+AnXkZP7bJY+dkJU1a4r7Me986lNbcEMnEHgNBe+n5rl115IIyXq76wMB1fObxhg5C1w6+8sgGTOVG7fuAbsalFCXZwy1Frr31VWdFQjk06ACCkic1NO3bsWFSwhZXyFFZXGy5YXqsYY+SzTIut35gRMiUsD3u6UpZjCGxCK0a0c6wGYZJbkJFDGrMo5dwmHCm1oGRQutq6rPxxB71hAg9TZ18SBjWFQc07D2WlcF6ptNw91t0dUu8FwDYep63C0JQ1I10nW6+QP49feMMOkUin2yew2TubOFGS2FpFWauEkm1pc4eS3dJmKstxYq53DPNoupS2Eno9BdfgkY+TLD6sFvw8QDrX2tWoh3TGLjnY2PMsVgJCNsxXW0XeOcccNxUbdkTO/mQzZyfauBXLQx+K1h7E0KJmv/Rva7kFDf8/1Na3/j2O81i6VMidTab+zbexN6TcZo/fvW2M3iMF5ta1dtnC1nXsCmlz522Q2mmWuaFZ3VkGrJZvDi6WlYd8I7b8qthy5ZZkbTIcDtcp4X2nzCEvsZFwJxl0+QSLwh0YZEux7QjHGVwqw7G5V7hhKPlfhxx3+z5b8gYWJz79aGqU60qB+Ixrc4ybNjecmGKOWSwXSynUeO9p6g5pbLMY6rvKij9+qfOpGrpwHG/x67oxCrs7Q03fz8S39/nuPNQuI8CrXVfvUPozsu3AFy5qG1ielC3v8cJGaDGFVuTAQIq3pBKpmLCVpBpKnjDKw8v6KtiYqaUY/EoJWxk2DpW9Kka56gJJ9TvrpFpmKVvq24+BYhlLDgZlDd2b1DZJzqHlGZnnFJm04cvlxoxubHh53KnG7R0KuLraGVph3HxVau+o6DzNScxZ7qj/sUW+kyS79N29HaHy22qMiZf+cY+a5fN1ct9t24XTr9iK8gJObEJTyWpVEnZ1a1krmHzRC8tFC+0PkmrttGpZJZy5WW6HYYolhLrOUnlSaHCJk3Sb57Bu3SkjtX2QHmWnBCrrAHRrDmvx4+CRWyy61b+ckeZ75BGnRqbIfMXqNZRDB1vmxt0Mbl1yJiixYSLgHbHqfrhsD1TBDah1shXWppm0974JI0i+nAsMlr7yrdLEslK0SXhh6riseEvy+6CH3DdN+eVfpxLFCWXLlZ4+UEbgvr3PuPk2XOB+wOkLG3zk53Yayc6Tgp26iJXdGNEOu9vNPjouSkRwAwb4BgNZ3DQhUQLjD0P+2QQl6Rhup7BpolSIp3ATkexZFoHH7AaPK0v1Yu3CFGBS1pyYWVmcDSrGEl+wj0Un8BRzgcawfzp7yETWSpFLMyJPHYxML9u3oBsij+67l9yfYbfLGiKjLVy++gm9S/vJyP1gSzCzTOoywZYIiiBmDCbpUNkOQjdxCVCUXRhOu+m0EkWEPs0ls9l8omRvhKO5qhfYsPN1tQK4K5fv0PRfRC0rm7wNJy31lt09ipXf4QbX0Ww+mUqkC64tcXrCIF2+Db87cOH/bABoQtaYtDnpbfisgWRqIVWo3O0Bh1wikRhI5OIiGOPsUCIeUY9jct+M5Pj4HBb20dT4eCzJVSItMgU8kFB6BNjDqeMD8kgatHQO/oizzusjfDnkA1xEH8mMalhUJ6+wnywPj45OT4/6R7GKblTcnA4kbvLMuXNnHtEhTFzSd+nw6OQI7lT70vZR+D0/MjJyaJn0V+z7BB82IWSJb1pHyxaUUfWggi3OdiSk9eQOT9SI3Yy0gRiM+Hi3cyswXjXZ8ap7r1YrGgN+xXRJ5cc78zudYgsHtumhUxtNv3EvLfusPrEFFu20dwYSQ6FTlvc5uwXZ/Mi/d+8u+w2oct4QKU0iFjQUK3aPUXd1UvbIYQcalHUY/eo5/atcVNjZd49W7kfnbECnKknhAiibY9DBs3ncWBBmErIUUs0RZku+93pF/IFt15qNJRcSuQkXvx7Unyxs4ZQl44X09fWEw957C4pWsSOkIliuR1TxhIAh64Y+Z4ct/oY9H4VdPdLp2hANhkCY71ol31YZCI1lOy7Rhsb+v+rH1tjY+MBGRL/HV3hKqXzzwcwQ0pqCky6RqaGZoVW2bgr/OzZI1BTvIcVdgB6+7wzNLWQRmc6NhuaNrrvtMXc79N6rFoAyjMoqfq4+Y6A+8eYc4npYVVa+cpeNF74NPWhsePo+7X/3uW85qpUvy4+xQue/S8Use+U7q7EnK72umySKfxt3120+m4zhdp8MX0DXy8WPTX8LqUQCq09W3f612v5j2KRfF50bSGLBBl8kVmta+RTMlfR9at97yHWf9NCeX8XFjpEJtr28ZdaWR6nkekC+aKKv2uvPFBthSyx1O9QMYpb9bU5MzvvR5XZhE4/4zROdiSWu7b7d9NebspZpGB57S1SpPWNsMPMORu094cC2yCcK1Jkr9zePhcruZa+Q6x4bu7W0e/fS3r1j3b3de8bGPvj73bubBuY+3rTpsSkBmtlctcefOTYsSuH7gRpWLJWmohxIPLmL3YIv5JI2/FvcDxh+9Pb29rokEWB+8MEPd2tpUJ/5WCxZrN5n43lgQ8u8MJDPJxNxWmmS3iB7Q143SQ+FFNsy5L6rMxw6utvlVFbbs8emOKI9FV6Ec+9EfhfuUAW2cmohvC2mRv4R/SVu9FQ7/LlgQ4+T+cZe535N5N1+u8d6Q0psuQyaegO+3ZTfVbbani+2NdrXxNfNJC30Q7IyFurwpuYo0lD3LfAN2qqd/IfFBtx4iKt3BczOlTGeOe1YTUN23/LBS6p68Q+Obf9/pcyY7KbkE6wt2Svube8ha90bl0DSttyo9vAfHhuIGwtxjdEthH6Cnt7KB6IoyHXnZnF70iq0FwQb6LwxVvrDKrnasDo5XrO0dyO78yw2eDC2d0VjtwGuQnthsFFCl8ZWiCQS3srvrB1vqxHNx4Pfzm2Aq+0FwMZTT/dUJ/z61i3uU7ZcrzJ73u3/ARnPVYSgytD/AAAAAElFTkSuQmCC" alt="商品情報完備くん" width="219" height="48"></button><span class="ver" title="バージョン">v4.9.0</span><div class="modesw" id="modeSw" role="group" aria-label="出品用と撤退用の切り替え"><button type="button" class="modebtn" data-mode="listing">出品用</button><button type="button" class="modebtn" data-mode="withdraw">撤退用</button></div><span class="demobadge" id="demoBadge" hidden title="GitHubにはつながっていません。ここでの変更は保存されません">見本データで表示中（保存されません）</span></div>
+  <div class="brand"><button type="button" class="logobtn" id="logoBtn" title="はじめの画面に戻る" aria-label="はじめの画面に戻る（商品情報完備くん）"><img class="logo-img" src="data:image/png;base64,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" alt="商品情報完備くん" width="219" height="48"></button><span class="ver" title="バージョン">v4.11.0</span><div class="modesw" id="modeSw" role="group" aria-label="出品用と撤退用の切り替え"><button type="button" class="modebtn" data-mode="listing">出品用</button><button type="button" class="modebtn" data-mode="withdraw">撤退用</button></div><span class="demobadge" id="demoBadge" hidden title="GitHubにはつながっていません。ここでの変更は保存されません">見本データで表示中（保存されません）</span></div>
   <div class="hd-actions" id="hdActions" hidden>
     <button class="hb" type="button" id="xlBtn"><svg viewBox="0 0 16 16" fill="none" stroke="#1D7A45" stroke-width="1.5" stroke-linejoin="round"><rect x="2.5" y="1.8" width="11" height="12.4" rx="1.5"/><path d="M5.3 5.5l2.4 3.3M7.7 5.5 5.3 8.8M9.5 5.5h2M9.5 8h2M5 11h6.5"/></svg>登録用エクセル</button>
     <span class="sync" id="sync" data-s="loading"><i></i><span id="syncText">読み込み中…</span></span>
@@ -1289,10 +1319,14 @@ body.mode-withdraw #xlBtn, body.mode-withdraw #colBtn { display: none !important
 </main>
 
 <main id="wapp" hidden>
+  <div class="wviewbar" id="wViewBar" role="tablist" aria-label="表示の切り替え">
+    <button type="button" class="wvbtn" role="tab" data-view="active"><b>進行中</b><span class="wvn" id="wvnActive">0</span><small>在庫消化中・撤退作業中</small></button>
+    <button type="button" class="wvbtn" role="tab" data-view="archive"><b>保管庫</b><span class="wvn" id="wvnArchive">0</span><small>撤退完了した商品</small></button>
+  </div>
   <div class="filters">
     <div class="frow"><span class="flabel">ショップ</span><div class="chips" id="wChipsShop"></div></div>
     <div class="frow">
-      <span class="flabel">状態</span><div class="chips" id="wChipsState"></div>
+      <span class="flabel" id="wStateLabel">状態</span><div class="chips" id="wChipsState"></div>
       <div class="factions">
         <input type="search" class="search" id="wSearch" placeholder="商品名・商品番号で検索" aria-label="商品名・商品番号で検索">
         <button class="hb" type="button" id="wTaskBtn">作業項目管理</button>
@@ -1346,7 +1380,7 @@ body.mode-withdraw #xlBtn, body.mode-withdraw #colBtn { display: none !important
   </form>
   <div class="tablewrap">
     <table class="wtable">
-      <thead><tr><th class="expcol" aria-label="作業リストの開閉"></th><th>日付</th><th>ショップ</th><th class="c">モール</th><th class="c">商品画像</th><th>商品番号</th><th>商品名</th><th class="c">在庫</th><th>作業進捗</th><th class="c">状態</th><th class="c">操作</th></tr></thead>
+      <thead id="wHead"></thead>
       <tbody id="wBody"></tbody>
     </table>
     <div class="empty" id="wEmpty" hidden></div>
@@ -1653,7 +1687,7 @@ function updRegDirty() {
     : n ? `未保存の変更が${n}件あります。「保存して閉じる」でまとめて保存されます。` : "変更は「保存して閉じる」でまとめて保存されます。";
   s.classList.toggle("dirty", n > 0);
 }
-function updItem(id, fn) { enqueue((d) => { const it = d.items.find((i) => i.id === id); if (it) fn(it); }); }
+function updItem(id, fn) { enqueue((d) => { const it = d.items.find((i) => i.id === id); if (it) { fn(it); if (dataMode === "withdraw") wStamp(it); } }); }
 async function flush(force) {
   if (saving) { clearTimeout(flushT); flushT = setTimeout(flush, 600); return; }
   /* 文字を打っている間は保存を待つ（「GitHubに保存」ボタンなど、はっきり押したときはすぐ保存） */
@@ -2839,64 +2873,109 @@ function neCodes(it) {
   return out;
 }
 const neOf = (it) => (((it || {}).reg || {}).ne) || {};
-function setNe(id, entries) {
+/* 1つのコードに入れる NE商品コードと個数（構成商品）。古い形 {sk, qty} は1件として読む */
+const neParts = (e) => {
+  e = e || {};
+  const ps = Array.isArray(e.parts) && e.parts.length ? e.parts : [{ sk: e.sk, qty: e.qty }];
+  return ps.map((p) => ({ sk: String((p || {}).sk || ""), qty: String((p || {}).qty || "") }));
+};
+/* 中身のある構成商品だけ（NE商品コードか個数のどちらかが入っている） */
+const neUsed = (ps) => ps.filter((p) => (p.sk + p.qty).trim());
+/* その行が入力済みか：構成商品が1つ以上あり、すべてに NE商品コードがある */
+const neRowDone = (ps) => { const u = neUsed(ps); return u.length > 0 && u.every((p) => p.sk.trim()); };
+const neNum = (v) => String(v || "").replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[^0-9]/g, "");
+/* 変更をまとめて入れる。fns は [コード, (parts) => { … }]。先頭の1件は古い形（sk・qty）にも書いておく */
+function setNeParts(id, fns) {
   updItem(id, (x) => {
     const reg = { ...(x.reg || {}) }, ne = { ...(reg.ne || {}) };
-    for (const [code, field, v] of entries) ne[code] = { ...(ne[code] || {}), [field]: v };
+    for (const [code, fn] of fns) {
+      const ps = neParts(ne[code]);
+      fn(ps);
+      if (!ps.length) ps.push({ sk: "", qty: "" });
+      ne[code] = { sk: ps[0].sk, qty: ps[0].qty, parts: ps };
+    }
     reg.ne = ne; x.reg = reg;
   });
 }
+const nePartsText = (e) => (e ? neUsed(neParts(e)).map((p) => `${p.sk || "（NE商品コード未入力）"}×${p.qty || "?"}`).join("、") : "");
 function renderNe(it, y) {
   const id = regId, ro = () => readOnly;
   const rows = neCodes(it);
   if (!rows.length) return [el("div", { class: "nebox" }, el("p", { class: "neempty", text: "登録用で「商品コード」か、種類の「個別商品コード」を入力すると、ここに縦に並びます。" }))];
   const ne = neOf(it);
-  const done = rows.filter((r) => String((ne[r.code] || {}).sk || "").trim()).length;
-  /* 複数行を貼り付けたら、その行から下へ順に入れる */
-  const pasteDown = (p, field) => (e) => {
+  const done = rows.filter((r) => neRowDone(neParts(ne[r.code]))).length;
+  /* 複数行を貼り付けたら、その行から下の商品コードへ順に入れる（同じ段＝k 番目の NE商品コードに）。
+     NE商品コードの欄に「NE商品コード［タブ］個数」の2列を貼ると個数も入る */
+  const pasteDown = (p, k, field) => (e) => {
     if (readOnly) return;
     const t = (e.clipboardData || window.clipboardData).getData("text");
     if (!/\r?\n/.test(t.trim())) return;
     e.preventDefault();
-    const lines = t.replace(/\r/g, "").split("\n").map((s) => s.split("\t")[0].trim());
-    while (lines.length && !lines[lines.length - 1]) lines.pop();
+    const lines = t.replace(/\r/g, "").split("\n").map((s) => s.split("\t").map((c) => c.trim()));
+    while (lines.length && !lines[lines.length - 1].join("")) lines.pop();
+    const two = field === "sk" && lines.every((c) => c.length >= 2 || !c[0]);
     const cur = neCodes(curReg());
-    setNe(id, lines.slice(0, cur.length - p).map((v, k) => [cur[p + k].code, field, field === "qty" ? v.replace(/[^0-9]/g, "") : v]));
-    flash(`${Math.min(lines.length, cur.length - p)}行に貼り付けました`);
+    const n = Math.min(lines.length, cur.length - p);
+    setNeParts(id, lines.slice(0, n).map((c, d) => [cur[p + d].code, (ps) => {
+      while (ps.length <= k) ps.push({ sk: "", qty: "" });
+      if (field === "qty") ps[k].qty = neNum(c[0]);
+      else { ps[k].sk = c[0]; if (two) ps[k].qty = neNum(c[1]); }
+    }]));
+    flash(`${n}行に貼り付けました${two ? "（個数も入れました）" : ""}`);
   };
   const list = el("div", { class: "nelist" },
-    el("div", { class: "nehead" }, el("span", { text: "#" }), el("span", { text: "商品コード（登録用）" }), el("span", { text: "NE商品コード" }), el("span", { text: "個数" })));
+    el("div", { class: "nehead" }, el("span", { text: "#" }), el("span", { text: "商品コード（登録用）" }), el("span", { text: "NE商品コード" }), el("span", { text: "個数" }), el("span")));
   let lastI = -1;
   rows.forEach((r, p) => {
     if (r.i !== lastI) { lastI = r.i; list.append(el("div", { class: "negrp" }, el("span", { class: "dot sq mk-yah", text: String(r.i + 1) }), `商品 ${r.i + 1}`, el("span", { class: "negc", text: (y.vars[r.i] || {}).code || "" }))); }
-    const get = (f) => (x) => String((neOf(x)[r.code] || {})[f] || "");
-    const sk = bindText(el("input", { type: "text", class: "mono", id: `ne-${p}-sk`, placeholder: p === 0 ? "例：SK-12345" : "", "aria-label": `${r.code}のNE商品コード` }), get("sk"), (v) => setNe(id, [[r.code, "sk", v]]), ro);
-    const qty = bindText(el("input", { type: "text", inputmode: "numeric", class: "mono", id: `ne-${p}-qty`, "aria-label": `${r.code}の個数` }), get("qty"), (v) => setNe(id, [[r.code, "qty", v.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[^0-9]/g, "")]]), ro);
-    sk.addEventListener("paste", pasteDown(p, "sk"));
-    qty.addEventListener("paste", pasteDown(p, "qty"));
-    const filled = !!String((ne[r.code] || {}).sk || "").trim();
-    list.append(el("div", { class: "nerow" + (filled ? " ok" : "") }, el("span", { class: "nen", text: String(p + 1) }),
-      el("div", { class: "nec" }, el("span", { class: "mono", text: r.code }), r.sub ? el("small", { text: r.sub }) : null), sk, qty));
+    const ps = neParts(ne[r.code]);
+    const parts = el("div", { class: "neparts" + (ps.length > 1 ? " multi" : "") });
+    ps.forEach((_, k) => {
+      const get = (f) => (x) => (neParts(neOf(x)[r.code])[k] || {})[f] || "";
+      const sk = bindText(el("input", { type: "text", class: "mono", id: `ne-${p}-${k}-sk`, placeholder: p === 0 && k === 0 ? "例：SK-12345" : "", "aria-label": `${r.code}のNE商品コード${ps.length > 1 ? k + 1 : ""}` }),
+        get("sk"), (v) => setNeParts(id, [[r.code, (pp) => { while (pp.length <= k) pp.push({ sk: "", qty: "" }); pp[k].sk = v; }]]), ro);
+      const qty = bindText(el("input", { type: "text", inputmode: "numeric", class: "mono", id: `ne-${p}-${k}-qty`, "aria-label": `${r.code}の個数${ps.length > 1 ? k + 1 : ""}` }),
+        get("qty"), (v) => setNeParts(id, [[r.code, (pp) => { while (pp.length <= k) pp.push({ sk: "", qty: "" }); pp[k].qty = neNum(v); }]]), ro);
+      sk.addEventListener("paste", pasteDown(p, k, "sk"));
+      qty.addEventListener("paste", pasteDown(p, k, "qty"));
+      const rm = el("button", { type: "button", class: "nerm", text: "×", title: "このNE商品コードを外す", "aria-label": `${r.code}のNE商品コード${k + 1}を外す`, disabled: readOnly || ps.length <= 1 });
+      rm.addEventListener("click", () => {
+        const go = () => { flushRegFocus(); setNeParts(id, [[r.code, (pp) => { pp.splice(k, 1); }]]); };
+        const cur = neParts(neOf(curReg())[r.code])[k] || {};
+        if (rm.dataset.armed || (cur.sk + cur.qty).trim()) arm(rm, "×", "外す？", go); else go();
+      });
+      parts.append(sk, qty, rm);
+    });
+    const add = el("button", { type: "button", class: "neadd", text: "＋ NE商品コードを追加", disabled: readOnly });
+    add.addEventListener("click", () => {
+      flushRegFocus();
+      regFocusAfter = `ne-${p}-${ps.length}-sk`;
+      setNeParts(id, [[r.code, (pp) => { pp.push({ sk: "", qty: "" }); }]]);
+    });
+    parts.append(add);
+    list.append(el("div", { class: "nerow" + (neRowDone(ps) ? " ok" : "") }, el("span", { class: "nen", text: String(p + 1) }),
+      el("div", { class: "nec" }, el("span", { class: "mono", text: r.code }), r.sub ? el("small", { text: r.sub }) : null, ps.length > 1 ? el("small", { class: "nek", text: `${ps.length}点のセット` }) : null), parts));
   });
-  /* 個数をまとめて入れる */
+  /* 個数をまとめて入れる（入っている NE商品コードすべて。まだ何もない行は1つ目に） */
   const allQty = el("input", { type: "text", inputmode: "numeric", class: "mono", placeholder: "例：4", "aria-label": "全部の個数" });
   const allBtn = el("button", { type: "button", class: "stall", text: "全部の個数にする", disabled: readOnly });
   allBtn.addEventListener("click", () => {
-    const v = allQty.value.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[^0-9]/g, "");
+    const v = neNum(allQty.value);
     if (!v) { flash("個数を数字で入れてください"); allQty.focus(); return; }
     flushRegFocus();
-    setNe(id, neCodes(curReg()).map((r) => [r.code, "qty", v]));
-    flash(`全${rows.length}行の個数を${v}にしました`);
+    let n = 0;
+    setNeParts(id, neCodes(curReg()).map((r) => [r.code, (pp) => { const u = pp.filter((q) => (q.sk + q.qty).trim()); for (const q of u.length ? u : [pp[0]]) { q.qty = v; n++; } }]));
+    flash(`${n}か所の個数を${v}にしました`);
   });
   return [el("div", { class: "nebox" },
     el("div", { class: "netop" }, el("strong", { text: "NE用 対応表" }), el("span", { class: "rprog sm" + (done === rows.length ? " full" : ""), text: `NE商品コード入力済 ${done} / ${rows.length}` }),
       el("span", { class: "neall" }, el("span", { text: "個数をまとめて" }), allQty, allBtn)),
-    el("p", { class: "nenote", text: "商品コードは登録用（種類があれば個別商品コード）から自動で並びます。NE商品コード・個数は、表計算から縦にまとめて貼り付けると下の行へ順に入ります。" }),
+    el("p", { class: "nenote", text: "商品コードは登録用（種類があれば個別商品コード）から自動で並びます。いくつかの商品を組み合わせたセットは「＋ NE商品コードを追加」で、NE商品コードと個数を何組でも入れられます。表計算から縦にまとめて貼り付けると下の行へ順に入ります（NE商品コードの欄に「NE商品コード・個数」の2列を貼ると個数も入ります）。" }),
     list)];
 }
 function neCsvBtn(it) {
   const rows = neCodes(it);
-  const b = el("button", { type: "button", class: "csvbtn ne", title: "商品コード・NE商品コード・個数をCSV（Shift_JIS）で出力" });
+  const b = el("button", { type: "button", class: "csvbtn ne", title: "ネクストエンジンのセット商品一括登録用のCSV（Shift_JIS）。NE商品コードが複数あるセットは、同じセット商品コードで1行ずつ出ます" });
   b.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 6.8 8 10.3l3.5-3.5M2.5 12.5v1h11v-1"/></svg>';
   b.append(el("b", { text: "セット商品登録用CSV" }), el("small", { text: `${rows.length}件` }));
   b.addEventListener("click", () => {
@@ -2904,21 +2983,25 @@ function neCsvBtn(it) {
     const cur = curReg(); if (!cur) return;
     const rs = neCodes(cur), ne = neOf(cur);
     if (!rs.length) { flash("商品コードがまだありません（登録用で入力してください）"); return; }
-    const missSk = rs.filter((r) => !String((ne[r.code] || {}).sk || "").trim()).length;
-    const missQty = rs.filter((r) => !String((ne[r.code] || {}).qty || "").trim()).length;
-    if ((missSk || missQty) && !b.dataset.armed) {
-      flash(`未入力があります（${[missSk ? `NE商品コード${missSk}件` : "", missQty ? `個数${missQty}件` : ""].filter(Boolean).join("・")}）。それでも出すならもう一度押してください`);
+    /* 行ごとの構成商品。何も入っていない行は空の1行として数える */
+    const sets = rs.map((r) => { const u = neUsed(neParts(ne[r.code])); return { code: r.code, parts: u.length ? u : [{ sk: "", qty: "" }] }; });
+    const all = sets.flatMap((s) => s.parts);
+    const missSk = all.filter((q) => !q.sk.trim()).length, missQty = all.filter((q) => !q.qty.trim()).length;
+    /* 同じセットに同じ NE商品コードが2回あると NE でエラーになりやすいので知らせる */
+    const dup = sets.filter((s) => { const ks = s.parts.map((q) => q.sk.trim()).filter(Boolean); return new Set(ks).size !== ks.length; }).map((s) => s.code);
+    if ((missSk || missQty || dup.length) && !b.dataset.armed) {
+      flash(`${[missSk || missQty ? `未入力があります（${[missSk ? `NE商品コード${missSk}件` : "", missQty ? `個数${missQty}件` : ""].filter(Boolean).join("・")}）` : "", dup.length ? `同じNE商品コードが2回入っています（${dup.slice(0, 3).join("・")}${dup.length > 3 ? " ほか" : ""}）` : ""].filter(Boolean).join("。")}。それでも出すならもう一度押してください`);
       b.dataset.armed = "1"; b.classList.add("armed");
       clearTimeout(b._t); b._t = setTimeout(() => { delete b.dataset.armed; b.classList.remove("armed"); }, 4000);
       return;
     }
     delete b.dataset.armed; b.classList.remove("armed");
-    /* ネクストエンジンのセット商品一括登録の形式（set_syohin_ikkatsu）。
+    /* ネクストエンジンのセット商品一括登録の形式（set_syohin_ikkatsu）。構成商品ごとに1行で、同じセット商品コードを繰り返す。
        セット商品コード・セット商品名＝登録用の商品コード、セット売価単価＝1000固定、商品コード＝NE商品コード、数量＝個数、代表商品コード＝空 */
     const cell = (v) => { const s = String(v == null ? "" : v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const lines = ["set_syohin_code,set_syohin_name,set_baika_tnk,syohin_code,suryo,daihyo_syohin_code",
-      ...rs.map((r) => { const e = ne[r.code] || {}; return [r.code, r.code, "1000", e.sk || "", e.qty || "", ""].map(cell).join(","); })];
-    downloadSjis(lines, "set_syohin_ikkatsu", `セット商品登録用CSVを出力しました（${rs.length}件）`, "\n");
+      ...sets.flatMap((s) => s.parts.map((q) => [s.code, s.code, "1000", q.sk.trim(), q.qty.trim(), ""].map(cell).join(",")))];
+    downloadSjis(lines, "set_syohin_ikkatsu", `セット商品登録用CSVを出力しました（${sets.length}セット・${lines.length - 1}行）`, "\n");
   });
   return b;
 }
@@ -4428,8 +4511,7 @@ function regChanges(a, b) {
   /* NE用 */
   const na = neOf(a), nb = neOf(b);
   for (const code of [...new Set([...Object.keys(na), ...Object.keys(nb)])]) {
-    const t = (e) => (e ? [e.sk ? `NE商品コード ${e.sk}` : "", e.qty ? `個数 ${e.qty}` : ""].filter(Boolean).join("・") : "");
-    if (t(na[code]) !== t(nb[code])) add("y", `NE用：${code}`, t(na[code]), t(nb[code]));
+    if (nePartsText(na[code]) !== nePartsText(nb[code])) add("y", `NE用：${code}`, nePartsText(na[code]), nePartsText(nb[code]));
   }
   /* 楽天 */
   const ra = ((a.reg || {}).rakuten) || {}, rb = ((b.reg || {}).rakuten) || {};
@@ -4718,7 +4800,7 @@ const DEMO_AUTO = (() => {
   return !(h.endsWith("github.io") || h === "localhost" || h === "127.0.0.1");
 })();
 let demoMode = false;
-const DEMO_DATA = { "data/items.json": {"items": [{"id": "p1", "date": "2026-10-14", "shop": "yukaiya", "name": "鼻呼吸テープ", "kanri": "", "no": "si-25-01", "rakuten": "new", "yahoo": "new", "status": "yoshida", "checks": {}, "createdAt": 3, "reg": {"yahoo": {"count": 2, "group": "si-25-01-group", "vars": [{"code": "si-25-01-30set", "name": "鼻呼吸テープ 30枚", "price": "1980", "spec": "内容", "label": "30枚セット", "optMode": 1, "opts": [{"name": "種類", "choices": ["X型30枚", "I型30枚"]}, {"name": "", "choices": []}], "kinds": [{"code": "si-25-01-x30", "name": "", "o1": "X型30枚", "o2": ""}, {"code": "si-25-01-i30", "name": "", "o1": "I型30枚", "o2": ""}]}, {"code": "si-25-01-60set", "name": "鼻呼吸テープ 60枚", "price": "1980", "spec": "内容", "label": "60枚セット", "optMode": 1, "opts": [{"name": "種類", "choices": ["X型60枚", "I型60枚", "X型30枚I型30枚"]}, {"name": "", "choices": []}], "kinds": [{"code": "si-25-01-x60", "name": "", "o1": "X型60枚", "o2": ""}, {"code": "si-25-01-i60", "name": "", "o1": "I型60枚", "o2": ""}, {"code": "", "name": "", "o1": "X型30枚I型30枚", "o2": ""}]}]}}}, {"id": "p2", "date": "2026-10-12", "shop": "kairy", "name": "Switch スティックカバー", "kanri": "kr-05", "no": "kr-05", "rakuten": "renewal", "yahoo": "new", "status": "takahashi", "checks": {}, "createdAt": 2}, {"id": "p3", "date": "2026-10-10", "shop": "yukaiya", "name": "フックシール", "kanri": "si-20-11", "no": "si-20-11", "rakuten": "done", "yahoo": "done", "status": "done", "checks": {}, "createdAt": 1}]}, "data/items-withdraw.json": {"items": [{"id": "w1", "date": "2026-10-15", "shop": "yukaiya", "malls": {"r": true, "y": true}, "codeR": "si-25-05", "codeY": "", "name": "Switch スティックカバー 4個セット", "zero": false, "stage": "selling", "done": {}, "createdAt": 1}, {"id": "w2", "date": "2026-10-16", "shop": "kairy", "malls": {"r": true, "y": true}, "codeR": "kr-12-01", "codeY": "kr12-01y", "name": "鼻呼吸テープ 30枚", "zero": true, "zeroAt": "2026-10-18", "stage": "working", "done": {"wr_stop@r": true}, "createdAt": 2}, {"id": "w3", "date": "2026-10-17", "shop": "yukaiya", "malls": {"r": false, "y": true}, "codeR": "", "codeY": "si-20-11", "name": "猫 爪とぎ ダンボール", "zero": true, "zeroAt": "2026-10-19", "stage": "done", "done": {"wy_stop@y": true, "wy_del@y": true}, "note": "在庫は倉庫で廃棄", "createdAt": 3}]} };
+const DEMO_DATA = {"data/items.json": {"items": [{"id": "p1", "date": "2026-10-14", "shop": "yukaiya", "name": "鼻呼吸テープ", "kanri": "", "no": "si-25-01", "rakuten": "new", "yahoo": "new", "status": "yoshida", "checks": {}, "createdAt": 3, "reg": {"yahoo": {"count": 2, "group": "si-25-01-group", "vars": [{"code": "si-25-01-30set", "name": "鼻呼吸テープ 30枚", "price": "1980", "spec": "内容", "label": "30枚セット", "optMode": 1, "opts": [{"name": "種類", "choices": ["X型30枚", "I型30枚"]}, {"name": "", "choices": []}], "kinds": [{"code": "si-25-01-x30", "name": "", "o1": "X型30枚", "o2": ""}, {"code": "si-25-01-i30", "name": "", "o1": "I型30枚", "o2": ""}]}, {"code": "si-25-01-60set", "name": "鼻呼吸テープ 60枚", "price": "1980", "spec": "内容", "label": "60枚セット", "optMode": 1, "opts": [{"name": "種類", "choices": ["X型60枚", "I型60枚", "X型30枚I型30枚"]}, {"name": "", "choices": []}], "kinds": [{"code": "si-25-01-x60", "name": "", "o1": "X型60枚", "o2": ""}, {"code": "si-25-01-i60", "name": "", "o1": "I型60枚", "o2": ""}, {"code": "si-25-01-xi60", "name": "", "o1": "X型30枚I型30枚", "o2": ""}]}]}, "ne": {"si-25-01-x30": {"sk": "si-25-01-x", "qty": "30"}, "si-25-01-i30": {"sk": "si-25-01-i", "qty": "30"}, "si-25-01-x60": {"sk": "si-25-01-x", "qty": "60"}, "si-25-01-xi60": {"sk": "si-25-01-x", "qty": "30", "parts": [{"sk": "si-25-01-x", "qty": "30"}, {"sk": "si-25-01-i", "qty": "30"}]}}}}, {"id": "p2", "date": "2026-10-12", "shop": "kairy", "name": "Switch スティックカバー", "kanri": "kr-05", "no": "kr-05", "rakuten": "renewal", "yahoo": "new", "status": "takahashi", "checks": {}, "createdAt": 2}, {"id": "p3", "date": "2026-10-10", "shop": "yukaiya", "name": "フックシール", "kanri": "si-20-11", "no": "si-20-11", "rakuten": "done", "yahoo": "done", "status": "done", "checks": {}, "createdAt": 1}]}, "data/items-withdraw.json": {"items": [{"id": "w1", "date": "2026-10-15", "shop": "yukaiya", "malls": {"r": true, "y": true}, "codeR": "si-25-05", "codeY": "", "name": "Switch スティックカバー 4個セット", "zero": false, "stage": "selling", "done": {}, "createdAt": 1}, {"id": "w2", "date": "2026-10-16", "shop": "kairy", "malls": {"r": true, "y": true}, "codeR": "kr-12-01", "codeY": "kr12-01y", "name": "鼻呼吸テープ 30枚", "zero": true, "zeroAt": "2026-10-18", "stage": "working", "done": {"wr_stop@r": true}, "createdAt": 2}, {"id": "w3", "date": "2026-10-17", "shop": "yukaiya", "malls": {"r": false, "y": true}, "codeR": "", "codeY": "si-20-11", "name": "猫 爪とぎ ダンボール", "zero": true, "zeroAt": "2026-10-19", "stage": "done", "done": {"wy_stop@y": true, "wy_del@y": true}, "note": "在庫は倉庫で廃棄", "createdAt": 3, "doneAt": "2026-10-19"}, {"id": "w4", "date": "2026-09-02", "shop": "kairy", "malls": {"r": true, "y": false}, "codeR": "kr-08-03", "codeY": "", "name": "シリコン 鍋敷き 3枚組", "zero": true, "zeroAt": "2026-09-20", "stage": "done", "doneAt": "2026-09-24", "done": {"wr_stop@r": true, "wr_del@r": true}, "note": "", "createdAt": -1}, {"id": "w5", "date": "2026-08-21", "shop": "yukaiya", "malls": {"r": true, "y": true}, "codeR": "si-18-02", "codeY": "", "name": "ステンレス 水筒 500ml", "zero": true, "zeroAt": "2026-09-10", "stage": "done", "doneAt": "2026-09-12", "done": {"wc_ne@c": true, "wr_stop@r": true, "wr_del@r": true, "wy_stop@y": true, "wy_del@y": "skip"}, "note": "残り在庫は社内で使用", "createdAt": -2}, {"id": "w6", "date": "2026-10-01", "shop": "yukaiya", "malls": {"r": true, "y": false}, "codeR": "si-22-07", "codeY": "", "name": "猫 爪とぎ ポール型", "zero": false, "stage": "selling", "done": {}, "createdAt": 4}]}};
 function installDemo() {
   if (demoMode) return;
   demoMode = true;
@@ -4926,17 +5008,46 @@ function renderW() {
   if (!$("#wTaskEditor").hidden) renderWTaskEditor();
 }
 $("#wBody").addEventListener("focusout", () => setTimeout(() => { if (wRenderLater) renderW(); }, 0));
+/* 撤退完了した商品は「保管庫」に分ける（進行中の一覧には出さない）。完了した日を doneAt に持つ */
+let wView = "active", wMonth = "all";
+function wStamp(x) {
+  if (wStage(x) === "done") { if (!x.doneAt) x.doneAt = today(); }
+  else if (x.doneAt) x.doneAt = "";
+}
+const wDoneDate = (it) => it.doneAt || it.zeroAt || it.date || "";
+const wInView = (it) => (wView === "archive" ? wStage(it) === "done" : wStage(it) !== "done");
 function wFiltered() {
   const q = catNorm(wQuery);
-  return data.items.filter((it) =>
+  const list = data.items.filter((it) =>
+    wInView(it) &&
     (wShop === "all" || it.shop === wShop) &&
-    (wState === "all" || wStage(it) === wState) &&
+    (wView === "archive" ? wMonth === "all" || wDoneDate(it).slice(0, 7) === wMonth : wState === "all" || wStage(it) === wState) &&
     (wMall === "all" || (it.malls && it.malls[wMall])) &&
-    (!q || catNorm([it.name, it.codeR, it.codeY, it.note].join(" ")).includes(q)))
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.createdAt || 0) - (a.createdAt || 0));
+    (!q || catNorm([it.name, it.codeR, it.codeY, it.note].join(" ")).includes(q)));
+  return wView === "archive"
+    ? list.sort((a, b) => String(wDoneDate(b)).localeCompare(String(wDoneDate(a))) || (b.createdAt || 0) - (a.createdAt || 0))
+    : list.sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.createdAt || 0) - (a.createdAt || 0));
+}
+function setWView(v) {
+  if (wView === v) return;
+  wView = v; wState = "all"; wMonth = "all"; wExpanded.clear();
+  if (v === "archive") { toggleWAdd(false); $("#wTaskEditor").hidden = true; }
+  renderW();
+}
+for (const b of document.querySelectorAll("#wViewBar .wvbtn")) b.addEventListener("click", () => setWView(b.dataset.view));
+function renderWHead() {
+  const th = (t, c) => el("th", { class: c || "", text: t });
+  $("#wHead").replaceChildren(el("tr", {}, ...(wView === "archive"
+    ? [th("完了日"), th("ショップ"), th("モール", "c"), th("商品画像", "c"), th("商品番号"), th("商品名"), th("作業"), th("メモ"), th("操作", "c")]
+    : [el("th", { class: "expcol", "aria-label": "作業リストの開閉" }), th("日付"), th("ショップ"), th("モール", "c"), th("商品画像", "c"), th("商品番号"), th("商品名"), th("在庫", "c"), th("作業進捗"), th("状態", "c"), th("操作", "c")])));
 }
 function renderWChips() {
-  const all = data.items;
+  const all = data.items.filter(wInView);
+  const nDone = data.items.filter((i) => wStage(i) === "done").length;
+  $("#wvnActive").textContent = String(data.items.length - nDone);
+  $("#wvnArchive").textContent = String(nDone);
+  for (const b of document.querySelectorAll("#wViewBar .wvbtn")) b.setAttribute("aria-selected", String(b.dataset.view === wView));
+  $("#wapp").classList.toggle("archive", wView === "archive");
   const set = (fn) => () => { fn(); renderW(); };
   $("#wChipsShop").replaceChildren(
     chip({ label: "全体", count: all.length, pressed: wShop === "all", onClick: set(() => (wShop = "all")) }),
@@ -4944,23 +5055,69 @@ function renderWChips() {
     el("span", { class: "wsep" }),
     chip({ label: "両モール", count: null, pressed: wMall === "all", onClick: set(() => (wMall = "all")) }),
     ...W_MALLS.map((M) => chip({ label: M.label, count: all.filter((i) => i.malls[M.m]).length, dot: el("span", { class: `dot sq ${M.cls}`, text: M.mark }), pressed: wMall === M.m, onClick: set(() => (wMall = M.m)) })));
+  if (wView === "archive") {
+    /* 保管庫：完了した月で絞り込む */
+    $("#wStateLabel").textContent = "完了した月";
+    const months = [...new Set(all.map((i) => wDoneDate(i).slice(0, 7)).filter(Boolean))].sort().reverse();
+    $("#wChipsState").replaceChildren(
+      chip({ label: "すべて", count: all.length, pressed: wMonth === "all", onClick: set(() => (wMonth = "all")) }),
+      ...months.map((m) => chip({ label: `${m.slice(0, 4)}年${Number(m.slice(5))}月`, count: all.filter((i) => wDoneDate(i).slice(0, 7) === m).length, pressed: wMonth === m, onClick: set(() => (wMonth = m)) })));
+    return;
+  }
+  $("#wStateLabel").textContent = "状態";
   $("#wChipsState").replaceChildren(
     chip({ label: "全体", count: all.length, pressed: wState === "all", onClick: set(() => (wState = "all")) }),
-    ...W_STAGES.map((s) => chip({ label: s.label, count: all.filter((i) => wStage(i) === s.key).length, dot: el("span", { class: `dot ${s.cls}`, text: s.mark }), pressed: wState === s.key, onClick: set(() => (wState = s.key)) })));
+    ...W_STAGES.filter((s) => s.key !== "done").map((s) => chip({ label: s.label, count: all.filter((i) => wStage(i) === s.key).length, dot: el("span", { class: `dot ${s.cls}`, text: s.mark }), pressed: wState === s.key, onClick: set(() => (wState = s.key)) })));
 }
 const W_COLS = 11;
 function renderWBody() {
+  renderWHead();
   const list = wFiltered();
   const rows = [];
   for (const it of list) {
+    if (wView === "archive") { rows.push(wArchiveRow(it)); continue; }
     rows.push(wRow(it));
     if (wExpanded.has(it.id)) rows.push(wDetail(it));
   }
   $("#wBody").replaceChildren(...rows);
   const empty = $("#wEmpty");
   empty.hidden = list.length > 0;
-  empty.replaceChildren(el("strong", { text: data.items.length ? "条件に合う商品がありません" : "撤退する商品はまだありません" }),
+  const anyInView = data.items.some(wInView);
+  if (wView === "archive") empty.replaceChildren(el("strong", { text: anyInView ? "条件に合う商品がありません" : "保管庫はまだ空です" }), ...(anyInView ? [] : [el("span", { text: "撤退完了になった商品は、自動でここに移ります" })]));
+  else empty.replaceChildren(el("strong", { text: anyInView ? "条件に合う商品がありません" : data.items.length ? "進行中の商品はありません（撤退完了した商品は「保管庫」にあります）" : "撤退する商品はまだありません" }),
     ...(data.items.length || readOnly ? [] : [el("span", { text: "「＋ 新規登録」から、撤退を決めた商品を登録してください（CSVでまとめて登録もできます）" })]));
+}
+/* 保管庫の行：見るだけ（必要なときは「進行中に戻す」） */
+function wArchiveRow(it) {
+  const id = it.id;
+  const sh = shopOf(it.shop);
+  const malls = el("div", { class: "wmalls" }, ...wMallsOf(it).map((M) => el("span", { class: `dot sq ${M.cls}`, text: M.mark, title: M.label })));
+  const code = el("div", { class: "wcode" }, el("b", { class: "mono", text: wCode(it) || "未入力" }));
+  if (it.malls.r && it.malls.y && it.codeY && it.codeY !== it.codeR) code.append(el("small", { class: "mono" }, el("span", { class: "dot sq mk-yah", text: "Y" }), it.codeY));
+  const img = el("button", { type: "button", class: "thumb" + (it.image ? "" : " wnoimg"), disabled: !it.image, "aria-label": "画像を拡大" }, it.image ? el("span", { class: "loadingimg" }) : "—");
+  if (it.image) imageUrl(it.image).then((u) => { img.replaceChildren(el("img", { src: u, alt: it.name || "" })); img.onclick = () => openLightbox(u); }).catch(() => img.replaceChildren("×"));
+  const units = wUnits(it), nSkip = units.filter((k) => it.done[k] === "skip").length;
+  const work = el("div", { class: "wawork" }, ...wGroupsOf(it).map((M) => el("span", { class: "wachip", title: `${M.label}の作業` }, el("span", { class: `dot sq ${M.cls}`, text: M.mark }), `${wDoneN(it, M.m)}/${wTasksOf(it, M.m).length}`)),
+    ...(nSkip ? [el("span", { class: "wasub", text: `スキップ${nSkip}` })] : []));
+  const back = el("button", { type: "button", class: "ob wedit", text: "進行中に戻す", disabled: readOnly });
+  back.addEventListener("click", () => wConfirm({
+    title: "進行中に戻しますか？", opener: back,
+    body: [`${wCode(it) || ""}　${it.name || ""}`, "状態を「撤退作業中」にして、進行中の一覧に戻します。作業のチェックはそのまま残ります。"],
+    ok: "進行中に戻す", onOk: () => { updItem(id, (x) => { x.stage = "working"; x.zero = true; x.zeroAt = x.zeroAt || today(); }); flash("進行中に戻しました（撤退作業中）"); },
+  }));
+  const del = el("button", { type: "button", class: "ob del", text: "削除", disabled: readOnly });
+  del.addEventListener("click", () => wConfirm({ title: "この商品を削除しますか？", opener: del, danger: true,
+    body: [`${wCode(it) || "（商品番号なし）"}　${it.name || ""}`, "保管庫からも消えます。元に戻せません。"], ok: "削除する", onOk: () => deleteItem(id) }));
+  return el("tr", { class: "wrow warow" },
+    el("td", { class: "mono wdate", text: wDoneDate(it) || "—" }),
+    el("td", {}, sh ? el("span", { class: "wshop" }, el("span", { class: `dot sq ${sh.cls}`, text: sh.mark }), sh.label) : el("span", { class: "none", text: "未設定" })),
+    el("td", { class: "c" }, malls),
+    el("td", { class: "c imgcell" }, img),
+    el("td", {}, code),
+    el("td", {}, el("div", { class: "namecell", text: it.name || "（商品名未入力）" })),
+    el("td", {}, work),
+    el("td", {}, el("div", { class: "wamemo", text: it.note || "" })),
+    el("td", { class: "c" }, el("div", { class: "wops" }, back, del)));
 }
 function wRow(it) {
   const id = it.id, stage = wStage(it), st = wStageOf(stage);
@@ -5013,7 +5170,7 @@ function wRow(it) {
   prog.addEventListener("click", toggle);
   /* 状態：ドロップダウンで直接変えられる */
   const stageP = makePicker({ options: W_STAGE_OPTS, label: "状態", extraClass: "wpick wstg st-" + stage, onChange: (v) => {
-    wChangeStage(it, v, (fn) => { updItem(id, fn); const x = data.items.find((i) => i.id === id); flash(`状態を「${wStageOf(wStage(x)).label}」にしました`); }, () => renderW(), stageP.btn);
+    wChangeStage(it, v, (fn) => { updItem(id, fn); const x = data.items.find((i) => i.id === id); flash(wStage(x) === "done" ? "撤退完了にしました。「保管庫」に移しました" : `状態を「${wStageOf(wStage(x)).label}」にしました`); }, () => renderW(), stageP.btn);
   } });
   stageP.set(stage); stageP.setDisabled(readOnly);
   const edit = el("button", { type: "button", class: "ob wedit", text: "編集", disabled: readOnly });
@@ -5055,7 +5212,7 @@ function wDetail(it) {
           const before = wStage(it);
           updItem(id, (x) => { x.done = { ...(x.done || {}) }; if (v) x.done[k] = v; else delete x.done[k]; wAfterChecks(x); });
           const after = wStage(data.items.find((x) => x.id === id) || it);
-          if (before !== "done" && after === "done") flash("すべての作業が終わりました。撤退完了です");
+          if (before !== "done" && after === "done") flash("すべての作業が終わりました。撤退完了として「保管庫」に移しました");
         }, ro);
       }) : [el("p", { class: "wdnote", text: "作業がまだありません。「作業項目管理」で追加してください" })]));
   });
@@ -5586,7 +5743,7 @@ $("#wTaskCopy").addEventListener("click", () => wConfirm({
 $("#wSearch").addEventListener("input", (e) => { wQuery = e.target.value.trim(); renderW(); });
 /* 撤退用のはじめの画面：絞り込みを全部「全体・両モール」に戻し、開いているものを閉じて一番上へ */
 function resetWView() {
-  wShop = "all"; wState = "all"; wMall = "all"; wQuery = "";
+  wShop = "all"; wState = "all"; wMall = "all"; wQuery = ""; wView = "active"; wMonth = "all";
   $("#wSearch").value = "";
   wExpanded.clear();
   $("#wTaskEditor").hidden = true;
