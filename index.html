@@ -627,6 +627,7 @@ textarea.ytin:focus { height: 150px; overflow: auto; white-space: pre-wrap; }
 .stlist { display: grid; gap: 3px; }
 .sthead, .strow { display: grid; grid-template-columns: 52px minmax(0, 1.4fr) minmax(0, 1fr); gap: 6px; align-items: center; }
 .stlist.o2 .sthead, .stlist.o2 .strow { grid-template-columns: 52px minmax(0, 1.3fr) minmax(0, .7fr) minmax(0, 1fr); }
+.stlist.o3 .sthead, .stlist.o3 .strow { grid-template-columns: 52px minmax(0, 1.3fr) minmax(0, .7fr) minmax(0, .8fr) minmax(0, .7fr); }
 .sthead span { font-size: 10.5px; font-weight: 700; color: var(--muted); }
 .strow { padding: 2px; border-radius: 6px; }
 .strow.cp { background: #E3F5EA; }
@@ -699,6 +700,7 @@ textarea.ytin:focus { height: 150px; overflow: auto; white-space: pre-wrap; }
 .kooff { font-size: 12px; color: var(--faint); }
 .stlist.o0 .sthead, .stlist.o0 .strow { grid-template-columns: 52px minmax(0, 1fr); }
 .kopts.one { grid-template-columns: minmax(0, 1fr); max-width: 640px; }
+.kopts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .kbprev { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 2px; padding: 5px 8px; border-radius: 6px; background: var(--surface); border: 1px dashed #B9CDF2; font-size: 12px; line-height: 1.5; min-width: 0; word-break: break-all; }
 .kbprev .kbpl { color: var(--muted); font-size: 11px; font-weight: 700; margin-right: 4px; }
 .kbprev del { color: var(--red); background: #FDECEC; border-radius: 3px; padding: 0 2px; text-decoration: line-through; }
@@ -710,6 +712,7 @@ textarea.ytin:focus { height: 150px; overflow: auto; white-space: pre-wrap; }
 .kbname input { height: 30px; border: 1px solid var(--line-strong); border-radius: 7px; padding: 0 8px; font: inherit; font-size: 12.5px; font-weight: 500; color: var(--ink); background: var(--surface); }
 .kbname input:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px #DCE6FA; }
 .kb2.k4 { grid-template-columns: minmax(0, 1.2fr) minmax(0, .7fr) minmax(0, 1fr) minmax(0, 1.3fr); }
+.kb2.k5 { grid-template-columns: minmax(0, 1.2fr) minmax(0, .7fr) minmax(0, .9fr) minmax(0, .7fr) minmax(0, 1.3fr); }
 .kopts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
 .kopt { border: 1px solid #B9CDF2; background: var(--surface); border-radius: 8px; padding: 8px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .kopth { display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; font-weight: 800; color: var(--blue); }
@@ -1413,7 +1416,7 @@ body.mode-withdraw #xlBtn, body.mode-withdraw #colBtn { display: none !important
 </head>
 <body>
 <header class="hd">
-  <div class="brand"><button type="button" class="logobtn" id="logoBtn" title="はじめの画面に戻る" aria-label="はじめの画面に戻る（商品情報完備くん）"><img class="logo-img" src="data:image/png;base64,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" alt="商品情報完備くん" width="219" height="48"></button><span class="ver" title="バージョン">v4.27.1</span><div class="modesw" id="modeSw" role="group" aria-label="出品用と撤退用の切り替え"><button type="button" class="modebtn" data-mode="listing">出品用</button><button type="button" class="modebtn" data-mode="wide" title="出品用の商品を横に並べて、担当の作業をまとめてチェックする">出品用（横並び）</button><button type="button" class="modebtn" data-mode="withdraw">撤退用</button></div><span class="demobadge" id="demoBadge" hidden title="GitHubにはつながっていません。ここでの変更は保存されません">見本データで表示中（保存されません）</span></div>
+  <div class="brand"><button type="button" class="logobtn" id="logoBtn" title="はじめの画面に戻る" aria-label="はじめの画面に戻る（商品情報完備くん）"><img class="logo-img" src="data:image/png;base64,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" alt="商品情報完備くん" width="219" height="48"></button><span class="ver" title="バージョン">v4.28.0</span><div class="modesw" id="modeSw" role="group" aria-label="出品用と撤退用の切り替え"><button type="button" class="modebtn" data-mode="listing">出品用</button><button type="button" class="modebtn" data-mode="wide" title="出品用の商品を横に並べて、担当の作業をまとめてチェックする">出品用（横並び）</button><button type="button" class="modebtn" data-mode="withdraw">撤退用</button></div><span class="demobadge" id="demoBadge" hidden title="GitHubにはつながっていません。ここでの変更は保存されません">見本データで表示中（保存されません）</span></div>
   <div class="hd-actions" id="hdActions" hidden>
     <button class="hb" type="button" id="xlBtn"><svg viewBox="0 0 16 16" fill="none" stroke="#1D7A45" stroke-width="1.5" stroke-linejoin="round"><rect x="2.5" y="1.8" width="11" height="12.4" rx="1.5"/><path d="M5.3 5.5l2.4 3.3M7.7 5.5 5.3 8.8M9.5 5.5h2M9.5 8h2M5 11h6.5"/></svg>登録用エクセル</button>
     <span class="sync" id="sync" data-s="loading"><i></i><span id="syncText">読み込み中…</span></span>
@@ -3052,24 +3055,35 @@ function writeY(id, fn) {
     x.reg = { ...(x.reg || {}), yahoo: y };
   });
 }
-const kindsOf = (v) => (Array.isArray(v && v.kinds) ? v.kinds.map((k) => ({ code: String((k || {}).code || ""), name: String((k || {}).name || ""), o1: String((k || {}).o1 || ""), o2: String((k || {}).o2 || ""), ...((k || {}).cp ? { cp: true } : {}) })) : []);
-const optsOf = (v) => { const o = Array.isArray(v && v.opts) ? v.opts : []; return [0, 1].map((j) => ({ name: String((o[j] || {}).name || ""), choices: Array.isArray((o[j] || {}).choices) ? o[j].choices.map((c) => String(c || "")) : [] })); };
+/* オプション項目は3種類まで。種類の行は o1・o2・o3 に、各項目で選んだ選択肢を持つ */
+const OPT_MAX = 3, OK = ["o1", "o2", "o3"], MODE_NAMES = ["なし", "1種類", "2種類", "3種類"];
+const optJs = (md) => Array.from({ length: md }, (_, j) => j);
+const kindsOf = (v) => (Array.isArray(v && v.kinds) ? v.kinds.map((k) => ({ code: String((k || {}).code || ""), name: String((k || {}).name || ""), o1: String((k || {}).o1 || ""), o2: String((k || {}).o2 || ""), o3: String((k || {}).o3 || ""), ...((k || {}).cp ? { cp: true } : {}) })) : []);
+const optsOf = (v) => { const o = Array.isArray(v && v.opts) ? v.opts : []; return [0, 1, 2].map((j) => ({ name: String((o[j] || {}).name || ""), choices: Array.isArray((o[j] || {}).choices) ? o[j].choices.map((c) => String(c || "")) : [] })); };
 const optChoices = (o) => o.choices.map((c) => c.trim()).filter(Boolean);
-/* 個別商品コードから外した組み合わせ（v.excl = [{o1, o2}]） */
-const exclOf = (v) => (Array.isArray(v && v.excl) ? v.excl.map((e) => ({ o1: String((e || {}).o1 || ""), o2: String((e || {}).o2 || "") })) : []);
-const comboKey = (c) => `${c.o1}\u0001${c.o2}`;
-/* オプション項目を1種類だけ使うか、2種類使うか。未設定なら項目2に何か入っていれば2種類 */
-const optMode = (v) => { if (v && v.optMode === 0) return 0; if (v && v.optMode === 2) return 2; if (v && v.optMode === 1) return 1; const o = optsOf(v)[1]; return o.name || optChoices(o).length ? 2 : 1; };
+/* 個別商品コードから外した組み合わせ（v.excl = [{o1, o2, o3}]） */
+const exclOf = (v) => (Array.isArray(v && v.excl) ? v.excl.map((e) => ({ o1: String((e || {}).o1 || ""), o2: String((e || {}).o2 || ""), o3: String((e || {}).o3 || "") })) : []);
+const comboKey = (c) => `${c.o1}\u0001${c.o2}\u0001${c.o3 || ""}`;
+const sameCombo = (a, b) => OK.every((o) => (a[o] || "") === (b[o] || ""));
+/* 組み合わせの表示（使っている項目の選択肢だけ。miss は未選択のときの文字） */
+const comboParts = (cs, k, miss = "") => cs.flatMap((c, j) => (c.length ? [k[OK[j]] || miss] : []));
+/* オプション項目を何種類使うか（0〜3）。未設定なら、中身が入っている一番うしろの項目まで */
+const optMode = (v) => {
+  if (v && [0, 1, 2, 3].includes(v.optMode)) return v.optMode;
+  const os = optsOf(v);
+  for (let j = OPT_MAX - 1; j > 0; j--) if (os[j].name || optChoices(os[j]).length) return j + 1;
+  return 1;
+};
 const varHasData = (v) => !!v && (Y_KEYS.some((k) => String(v[k] || "").trim()) || kindsOf(v).some((k) => (k.code + k.name).trim()));
 /* 画面の形（商品数と、各商品の種類の行数）。変わったら作り直す */
 const yShape = (it) => {
   const y = yNorm(it);
   return y.count + "|" + y.vars.slice(0, y.count).map((v) => {
-    const os = optsOf(v), md = optMode(v), c1 = md ? optChoices(os[0]) : [], c2 = md === 2 ? optChoices(os[1]) : [], ks = kindsOf(v);
-    const grouped = c1.length > 0 || c2.length > 0;
+    const os = optsOf(v), md = optMode(v), cs = os.map((o, j) => (j < md ? optChoices(o) : [])), ks = kindsOf(v);
+    const grouped = cs.some((c) => c.length > 0);
     const slots = os.map((o) => Math.max(1, o.choices.length)).join("/");
-    const rows = (grouped ? ks.length + ":" + JSON.stringify([c1, c2, ks.map((k) => [k.o1, k.o2]), exclOf(v).map(comboKey)]) : Math.max(1, ks.length)) + "#" + ks.map((k) => (k.cp ? 1 : 0)).join("");
-    return `m${md}~${slots}~${c1.length}/${c2.length}~${rows}`;
+    const rows = (grouped ? ks.length + ":" + JSON.stringify([cs, ks.map((k) => OK.map((o) => k[o])), exclOf(v).map(comboKey)]) : Math.max(1, ks.length)) + "#" + ks.map((k) => (k.cp ? 1 : 0)).join("");
+    return `m${md}~${slots}~${cs.map((c) => c.length).join("/")}~${rows}`;
   }).join(",");
 };
 let regFocusAfter = null;
@@ -3323,7 +3337,7 @@ function neCodes(it) {
   const y = yNorm(it), out = [], seen = new Set();
   y.vars.slice(0, y.count).forEach((v, i) => {
     const ks = optMode(v) ? kindsOf(v).filter((k) => k.code.trim()) : []; /* オプション項目なしは商品コードだけ */
-    const rows = ks.length ? ks.map((k) => ({ code: k.code.trim(), sub: [k.o1, optMode(v) === 2 ? k.o2 : ""].filter(Boolean).join(" / ") || k.name })) : String(v.code || "").trim() ? [{ code: String(v.code).trim(), sub: v.label || "" }] : [];
+    const rows = ks.length ? ks.map((k) => ({ code: k.code.trim(), sub: optJs(optMode(v)).map((j) => k[OK[j]]).filter(Boolean).join(" / ") || k.name })) : String(v.code || "").trim() ? [{ code: String(v.code).trim(), sub: v.label || "" }] : [];
     for (const r of rows) if (!seen.has(r.code)) { seen.add(r.code); out.push({ i, ...r }); }
   });
   return out;
@@ -3704,16 +3718,17 @@ const Y_CSV_COLS = [
   ["options", (v) => optionsOf(v)],
   ["sub-code", (v) => subCodeOf(v).text],
 ];
-/* options（オプション項目）：「項目名 選択肢1 選択肢2 …」を半角スペースで区切る。項目が2つのときは空行（改行2つ）で区切る。
+/* options（オプション項目）：「項目名 選択肢1 選択肢2 …」を半角スペースで区切る。項目が2つ以上のときは空行（改行2つ）で区切る。
    sub-code を出す商品だけに出す（sub-code はここにある項目名・選択肢と一致している必要がある） */
 function optionsOf(v) {
   if (!subCodeOf(v).text) return "";
   const f = kindInfo(v || {});
   const blocks = [];
-  /* 1種類は外した選択肢を出さない（sub-code と同じ選択肢だけ）。2種類は外せないので全部 */
-  const ch1 = f.mode === 1 ? f.combos.map((c) => c.o1) : f.c1;
-  if (ch1.length) blocks.push([f.os[0].name.trim(), ...ch1].join(" "));
-  if (f.c2.length) blocks.push([f.os[1].name.trim(), ...f.c2].join(" "));
+  /* 1種類は外した選択肢を出さない（sub-code と同じ選択肢だけ）。2種類以上は外せないので全部 */
+  f.cs.forEach((c, j) => {
+    const ch = j === 0 && f.mode === 1 ? f.combos.map((x) => x.o1) : c;
+    if (ch.length) blocks.push([f.os[j].name.trim(), ...ch].join(" "));
+  });
   return blocks.join("\n\n");
 }
 /* sub-code（個別商品コード）：「項目名:選択肢#項目名:選択肢=個別商品コード」を「&」でつなぐ。
@@ -3727,21 +3742,20 @@ function subCodeOf(v) {
   if (!f.mode || !f.grouped) return res;
   if (!f.kinds.length) { res.issues.push("組み合わせを割り当てていない（オプション項目なしで出ます）"); return res; }
   if (!f.same) ng("選択肢が変わっていて割り当て直しが必要");
-  /* Yahooは、オプション項目が2つのとき「項目1×項目2」の組み合わせを全部登録する必要がある */
-  if (f.mode === 2 && f.excluded.length) ng(`組み合わせを${f.excluded.length}件外している（2種類はYahooで全部の組み合わせが必要。外した組み合わせを戻すか「1種類にまとめる」）`);
-  const names = [f.os[0].name.trim(), f.mode === 2 ? f.os[1].name.trim() : ""];
-  if (f.c1.length && !names[0]) ng("オプション項目1の項目名が空");
-  if (f.c2.length && !names[1]) ng("オプション項目2の項目名が空");
-  const words = [names[0], names[1], ...f.c1, ...f.c2].filter(Boolean);
+  /* Yahooは、オプション項目が2つ以上のとき「項目1×項目2（×項目3）」の組み合わせを全部登録する必要がある */
+  if (f.mode >= 2 && f.excluded.length) ng(`組み合わせを${f.excluded.length}件外している（2種類以上はYahooで全部の組み合わせが必要。外した組み合わせを戻すか「1種類にまとめる」）`);
+  const names = [0, 1, 2].map((j) => (j < f.mode ? f.os[j].name.trim() : ""));
+  f.cs.forEach((c, j) => { if (c.length && !names[j]) ng(`オプション項目${j + 1}の項目名が空`); });
+  const words = [...names, ...f.cs.flat()].filter(Boolean);
   if (words.some((w) => SUB_BAD.test(w))) ng("項目名か選択肢に「: # = &」が入っている");
   if (words.some((w) => OPT_SPACE.test(w))) ng("項目名か選択肢にスペースが入っている（options ではスペースが区切りになるため）");
-  if (f.c1.length > 100 || f.c2.length > 100) ng("選択肢が100を超えている（Yahooは1項目100まで）");
+  if (f.cs.some((c) => c.length > 100)) ng("選択肢が100を超えている（Yahooは1項目100まで）");
   const parts = [];
   let empty = 0;
   for (const r of kindOrder(f.kinds, f.c1)) {
     const k = f.kinds[r], code = k.code.trim();
     if (!code) { empty++; continue; }
-    const pair = [f.c1.length ? `${names[0]}:${k.o1}` : "", f.c2.length ? `${names[1]}:${k.o2}` : ""].filter(Boolean).join("#");
+    const pair = f.cs.flatMap((c, j) => (c.length ? [`${names[j]}:${k[OK[j]]}`] : [])).join("#");
     parts.push(`${pair}=${code}`);
   }
   if (empty) ng(`個別商品コードが${empty}件未入力（Yahooは全部の組み合わせにコードが必要）`);
@@ -3774,7 +3788,7 @@ function paintCsvErr() {
     const f = kindInfo(v);
     if (!f.mode || !f.grouped || !f.kinds.length) return;
     const top = body.querySelector(`.ktop[data-i="${i}"]`), low = body.querySelector(`.klow[data-i="${i}"]`);
-    const js = f.mode === 2 ? [0, 1] : [0];
+    const js = optJs(f.mode);
     let optBad = false;
     for (const j of js) {
       const o = f.os[j], has = optChoices(o).length;
@@ -3790,7 +3804,7 @@ function paintCsvErr() {
     const codeBad = !f.same || codes.some((c) => !c) || filled.length !== new Set(filled).size
       || filled.some((c) => !CODE_OK.test(c) || c.includes("_") || c.length > 99 || (owner.get(c) || []).some((j) => j !== i));
     if (codeBad && low) { mark(low.querySelector(".kcbox") || low); n++; }
-    if (f.mode === 2 && f.excluded.length && low) { mark(low.querySelector(".kex") || low); n++; }
+    if (f.mode >= 2 && f.excluded.length && low) { mark(low.querySelector(".kex") || low); n++; }
   });
   if (!n) csvErrOn = false;
 }
@@ -3899,9 +3913,9 @@ function hScroll(cols) {
 function stockBlock(i, v) {
   const id = regId;
   const md = optMode(v), os = optsOf(v);
-  const use = (md === 2 ? [0, 1] : md === 1 ? [0] : []).filter((j) => os[j].name || optChoices(os[j]).length);
+  const use = optJs(md).filter((j) => os[j].name || optChoices(os[j]).length);
   const all = md ? kindsOf(v) : []; /* オプション項目なしは種類を使わない */
-  const idx = all.map((k, r) => r).filter((r) => (all[r].code + all[r].name + all[r].o1 + all[r].o2).trim());
+  const idx = all.map((k, r) => r).filter((r) => (all[r].code + all[r].name + all[r].o1 + all[r].o2 + all[r].o3).trim());
   if (!use.length && !idx.length) return [el("div", { class: "rrsub none", text: "登録用の「種類」がまだ入力されていません" })];
   const out = [];
   /* 展開／最小化（全商品の列でそろえる） */
@@ -3937,10 +3951,9 @@ function stockBlock(i, v) {
     const c1 = md ? optChoices(os[0]) : [];
     const order = c1.length ? [...c1.flatMap((g) => idx.filter((r) => all[r].o1 === g)), ...idx.filter((r) => !c1.includes(all[r].o1))] : idx;
     const nDone = idx.filter((r) => all[r].cp).length;
-    const show2 = md === 2;
-    const show1 = md > 0;
-    const list = el("div", { class: "stlist" + (show2 ? " o2" : show1 ? "" : " o0") },
-      el("div", { class: "sthead" }, el("span"), el("span", { text: "個別商品コード" }), ...(show1 ? [el("span", { text: os[0].name || "項目1" })] : []), ...(show2 ? [el("span", { text: os[1].name || "項目2" })] : [])),
+    const sj = optJs(md);
+    const list = el("div", { class: "stlist" + (md >= 2 ? ` o${md}` : md ? "" : " o0") },
+      el("div", { class: "sthead" }, el("span"), el("span", { text: "個別商品コード" }), ...sj.map((j) => el("span", { text: os[j].name || `項目${j + 1}` }))),
       ...order.map((r) => {
         const k = all[r];
         const b = el("button", { type: "button", class: "fcp sm" + (k.cp ? " done" : ""), text: k.cp ? "✓ 済" : "コピー", title: k.cp ? "もう一度押すと済を外します" : "個別商品コードをコピー" });
@@ -3950,7 +3963,7 @@ function stockBlock(i, v) {
         });
         return el("div", { class: "strow" + (k.cp ? " cp" : "") }, b,
           el("span", { class: "stc mono" + (k.code ? "" : " none"), text: k.code || "未入力" }),
-          ...(show1 ? [el("span", { class: "stc", text: k.o1 || "—" })] : []), ...(show2 ? [el("span", { class: "stc", text: k.o2 || "—" })] : []));
+          ...sj.map((j) => el("span", { class: "stc", text: k[OK[j]] || "—" })));
       }));
     /* 個別商品コードを画面の並び順で、1行に1つずつまとめてコピー（全部を済にする） */
     const bulk = el("button", { type: "button", class: "stall", text: "個別商品コード一括コピー", title: "上から順に1行に1つずつコピーします" });
@@ -4353,7 +4366,7 @@ const yWrapCols = () => (Y_WRAP_MQ[2].matches ? 1 : Y_WRAP_MQ[1].matches ? 2 : Y
 for (const m of Y_WRAP_MQ) m.addEventListener("change", () => {
   if (regId && !$("#regModal").hidden && regTab === "yahoo" && regYMode === "input" && yLayout === "wrap") { flushRegFocus(); rerenderReg(); }
 });
-/* 種類：オプション項目1・2（項目名と選択肢）を決めて、行ごとに 商品コード／項目1／項目2／商品名 を持つ。
+/* 種類：オプション項目1〜3（項目名と選択肢）を決めて、行ごとに 商品コード／項目1〜3／商品名 を持つ。
    オプションがあるときは、Yahooの個別商品の画面のように項目1の選択肢ごとにまとめて表示する */
 function bindText(inp, get, set, ro) {
   inp.spellcheck = false;
@@ -4402,17 +4415,18 @@ function bindSelect(sel, getChoices, get, set, ro) {
    横いっぱいのバー（copyBar）：商品ごとに、個別商品コードをまとめてコピーする */
 function kindInfo(v) {
   const os = optsOf(v), mode = optMode(v);
-  const c1 = mode ? optChoices(os[0]) : [], c2 = mode === 2 ? optChoices(os[1]) : [];
-  const grouped = c1.length > 0 || c2.length > 0;
-  /* 組み合わせは上から順に（項目1が外側、項目2が内側） */
+  const cs = [0, 1, 2].map((j) => (j < mode ? optChoices(os[j]) : []));
+  const [c1, c2, c3] = cs;
+  const grouped = cs.some((c) => c.length > 0);
+  /* 組み合わせは上から順に（項目1が一番外側、項目3が一番内側） */
   const all = [];
-  if (grouped) for (const a of (c1.length ? c1 : [""])) for (const b of (c2.length ? c2 : [""])) all.push({ o1: a, o2: b });
+  if (grouped) for (const a of (c1.length ? c1 : [""])) for (const b of (c2.length ? c2 : [""])) for (const c of (c3.length ? c3 : [""])) all.push({ o1: a, o2: b, o3: c });
   /* 外した組み合わせは使わない（今の選択肢にあるものだけを「外した一覧」に出す） */
   const ex = new Set(exclOf(v).map(comboKey));
   const combos = all.filter((c) => !ex.has(comboKey(c))), excluded = all.filter((c) => ex.has(comboKey(c)));
   const kinds = kindsOf(v);
-  const same = grouped && kinds.length === combos.length && kinds.every((k, r) => k.o1 === combos[r].o1 && k.o2 === combos[r].o2);
-  return { os, mode, c1, c2, grouped, combos, excluded, kinds, same };
+  const same = grouped && kinds.length === combos.length && kinds.every((k, r) => sameCombo(k, combos[r]));
+  return { os, mode, c1, c2, c3, cs, grouped, combos, excluded, kinds, same };
 }
 /* 画面に並んでいる順（項目1の選択肢ごと → 未選択）の行番号 */
 function kindOrder(ks, c1) {
@@ -4425,9 +4439,9 @@ function kindOrder(ks, c1) {
 /* 割り当て：同じ組み合わせの行はコードをそのまま残す。残りは今の行を上から順に使う。組み合わせより多い行は外す */
 function planKinds(cur, combos) {
   const used = new Set();
-  const out = combos.map((cb) => { const ix = cur.findIndex((k, x) => !used.has(x) && k.o1 === cb.o1 && k.o2 === cb.o2); if (ix < 0) return null; used.add(ix); return { ...cur[ix] }; });
+  const out = combos.map((cb) => { const ix = cur.findIndex((k, x) => !used.has(x) && sameCombo(k, cb)); if (ix < 0) return null; used.add(ix); return { ...cur[ix] }; });
   const left = cur.map((k, x) => x).filter((x) => !used.has(x));
-  out.forEach((k, p) => { if (!k) { const x = left.shift(); out[p] = x === undefined ? { code: "", name: "", o1: "", o2: "" } : { ...cur[x] }; } out[p].o1 = combos[p].o1; out[p].o2 = combos[p].o2; });
+  out.forEach((k, p) => { if (!k) { const x = left.shift(); out[p] = x === undefined ? { code: "", name: "", o1: "", o2: "", o3: "" } : { ...cur[x] }; } for (const o of OK) out[p][o] = combos[p][o] || ""; });
   return { out, lost: left.filter((x) => cur[x].code.trim()).length };
 }
 /* コピーする個別商品コード（画面に並んでいる順。途中の空きは空の行のまま、末尾の空行は除く）。total は行の数、filled は入力済みの数 */
@@ -4459,29 +4473,30 @@ function kindTop(i, y) {
   const box = el("div", { class: "kbox ktop" + (kmin ? " min" : ""), "data-i": String(i) }, khead);
   if (kmin) {
     /* 小さくしているときは件数とオプション項目だけ見せる */
-    const filled = kinds.filter((k) => (k.code + k.name + k.o1 + k.o2).trim()).length;
-    const optSum = (mode === 2 ? [0, 1] : mode === 1 ? [0] : []).map((j) => { const n = optChoices(os[j]).length; return os[j].name || n ? `${os[j].name || `項目${j + 1}`} ${n}` : ""; }).filter(Boolean).join(" ・ ");
+    const filled = kinds.filter((k) => (k.code + k.name + k.o1 + k.o2 + k.o3).trim()).length;
+    const optSum = optJs(mode).map((j) => { const n = optChoices(os[j]).length; return os[j].name || n ? `${os[j].name || `項目${j + 1}`} ${n}` : ""; }).filter(Boolean).join(" ・ ");
     box.append(el("div", { class: "boxsum" }, ...(mode ? [sumItem("種類", filled ? `${filled}件` : "")] : []), sumItem("オプション項目", mode === 0 ? "なし" : optSum ? `${mode}種類（${optSum}）` : "")));
     return box;
   }
-  /* オプション項目を1種類にするか2種類にするか */
+  /* オプション項目を何種類使うか（なし・1種類・2種類・3種類） */
   const modeBtn = (n) => {
-    const b = el("button", { type: "button", class: "kmbtn", "aria-pressed": String(mode === n), text: n === 0 ? "なし" : n === 1 ? "1種類" : "2種類", disabled: readOnly });
+    const b = el("button", { type: "button", class: "kmbtn", "aria-pressed": String(mode === n), text: MODE_NAMES[n], disabled: readOnly });
     b.addEventListener("click", () => {
       if (mode === n) return;
       flushRegFocus();
       regBulk.delete(i);
       writeY(id, (yy) => { while (yy.vars.length <= i) yy.vars.push({}); yy.vars[i] = { ...(yy.vars[i] || {}), optMode: n }; });
-      if (n === 0 && (optChoices(os[0]).length || optChoices(os[1]).length)) flash("オプション項目は使わない設定にしました（入力した内容は残っていて、戻すと元に戻ります）");
-      else if (n === 1 && optChoices(os[1]).length) flash("オプション項目2は隠しました（2種類に戻すと元に戻ります）");
+      const hid = os.map((o, j) => j).filter((j) => j >= n && j < mode && optChoices(os[j]).length);
+      if (n === 0 && os.some((o) => optChoices(o).length)) flash("オプション項目は使わない設定にしました（入力した内容は残っていて、戻すと元に戻ります）");
+      else if (n && hid.length) flash(`オプション項目${hid.map((j) => j + 1).join("・")}は隠しました（${MODE_NAMES[mode]}に戻すと元に戻ります）`);
     });
     return b;
   };
-  /* 商品1だけ：なし／1種類／2種類の選び方を、他の商品全部に同じにする（入れた選択肢などは消さない） */
+  /* 商品1だけ：なし／1種類／2種類／3種類の選び方を、他の商品全部に同じにする（入れた選択肢などは消さない） */
   let modeSpread = null;
   if (i === 0 && y.count > 1) {
-    const label = "他の商品全てへコピー", mn = (m) => ["なし", "1種類", "2種類"][m];
-    modeSpread = el("button", { type: "button", class: "spreadbtn kmspread", text: label, disabled: readOnly, title: "オプション項目の数（なし／1種類／2種類）を、商品2以降の全部に同じにします。入れた選択肢や個別商品コードは消えません" });
+    const label = "他の商品全てへコピー", mn = (m) => MODE_NAMES[m];
+    modeSpread = el("button", { type: "button", class: "spreadbtn kmspread", text: label, disabled: readOnly, title: "オプション項目の数（なし／1種類／2種類／3種類）を、商品2以降の全部に同じにします。入れた選択肢や個別商品コードは消えません" });
     modeSpread.addEventListener("click", () => {
       flushRegFocus();
       const yy0 = yNorm(curReg()), m = optMode(yy0.vars[0] || {});
@@ -4502,18 +4517,18 @@ function kindTop(i, y) {
   }
   /* 「他の商品全てへコピー」は見出しの「一括入力」の右に置く（下のオプション項目の位置が商品ごとにずれないように） */
   if (modeSpread) khead.insertBefore(modeSpread, khead.querySelector(".boxtools"));
-  box.append(el("div", { class: "kmode" }, el("span", { class: "kml", text: "オプション項目" }), el("div", { class: "kmseg", role: "group", "aria-label": "オプション項目の数" }, modeBtn(0), modeBtn(1), modeBtn(2))));
+  box.append(el("div", { class: "kmode" }, el("span", { class: "kml", text: "オプション項目" }), el("div", { class: "kmseg", role: "group", "aria-label": "オプション項目の数" }, modeBtn(0), modeBtn(1), modeBtn(2), modeBtn(3))));
 
-  /* --- オプション項目1・2 --- */
+  /* --- オプション項目1・2・3 --- */
   const optCard = (j) => {
     const o = os[j];
     const nSlots = Math.max(1, o.choices.length);
-    const nameInp = bindText(el("input", { type: "text", id: `rg-y-${i}-o${j}-name`, placeholder: j === 0 ? "例：サイズ" : "例：カラー", "aria-label": `オプション項目${j + 1}の項目名` }),
+    const nameInp = bindText(el("input", { type: "text", id: `rg-y-${i}-o${j}-name`, placeholder: ["例：サイズ", "例：カラー", "例：セット数"][j], "aria-label": `オプション項目${j + 1}の項目名` }),
       (x) => optsOf(yNorm(x).vars[i])[j].name,
       (v) => setOpts((oo) => { oo[j].name = v; }), ro);
     const list = el("div", { class: "kochoices" });
     for (let c = 0; c < nSlots; c++) {
-      const inp = el("input", { type: "text", id: `rg-y-${i}-o${j}-c${c}`, placeholder: c === 0 ? (j === 0 ? "例：20mm" : "例：01-ブラック") : "", "aria-label": `オプション項目${j + 1}の選択肢${c + 1}` });
+      const inp = el("input", { type: "text", id: `rg-y-${i}-o${j}-c${c}`, placeholder: c === 0 ? ["例：20mm", "例：01-ブラック", "例：1個"][j] : "", "aria-label": `オプション項目${j + 1}の選択肢${c + 1}` });
       bindText(inp,
         (x) => optsOf(yNorm(x).vars[i])[j].choices[c] || "",
         (v, old) => setOpts((oo, ks, ex) => {
@@ -4555,7 +4570,7 @@ function kindTop(i, y) {
       ...(regOptBulk.has(`${i}-${j}`) && !readOnly ? [optBulkPanel(i, j, setOpts)] : []));
   };
   if (mode === 0) box.append(el("div", { class: "kopts none" }, el("div", { class: "kopt off", "aria-disabled": "true" }, el("span", { class: "kooff", text: "オプション項目・種類は使いません（商品コードだけで登録します）" }))));
-  else box.append(el("div", { class: "kopts" + (mode === 2 ? "" : " one") }, ...(mode === 2 ? [optCard(0), optCard(1)] : [optCard(0)])));
+  else box.append(el("div", { class: "kopts" + (mode === 1 ? " one" : mode === 3 ? " three" : "") }, ...optJs(mode).map(optCard)));
   /* 一括入力は種類の見出しのすぐ下に開く（行が多くても探さなくていいように） */
   if (mode && regBulk.has(i) && !readOnly) box.insertBefore(bulkPanel(i), box.children[2]); /* 見出し・オプション項目の切り替えのすぐ下 */
   return box;
@@ -4565,13 +4580,14 @@ function kindLower(i, y) {
   const id = regId;
   const ro = () => readOnly;
   const v0 = y.vars[i] || {};
-  const { os, mode, c1, c2, grouped, combos, excluded, kinds, same } = kindInfo(v0);
+  const { os, mode, c1, cs, grouped, combos, excluded, kinds, same } = kindInfo(v0);
   const rows = grouped ? kinds.length : Math.max(1, kinds.length);
+  const optNames = cs.flatMap((c, j) => (c.length ? [os[j].name || `項目${j + 1}`] : []));
   const curVar = () => yNorm(curReg()).vars[i] || {};
   const setKinds = (fn) => writeY(id, (yy) => {
     while (yy.vars.length <= i) yy.vars.push({});
     const ks = kindsOf(yy.vars[i]);
-    while (ks.length < rows) ks.push({ code: "", name: "", o1: "", o2: "" });
+    while (ks.length < rows) ks.push({ code: "", name: "", o1: "", o2: "", o3: "" });
     fn(ks);
     yy.vars[i] = { ...(yy.vars[i] || {}), kinds: ks };
   });
@@ -4597,40 +4613,40 @@ function kindLower(i, y) {
   function exclList() {
     const list = el("div", { class: "kexl" });
     for (const c of excluded) {
-      const t = [c1.length ? c.o1 : "", c2.length ? c.o2 : ""].filter(Boolean).join(" / ");
+      const t = comboParts(cs, c).filter(Boolean).join(" / ");
       const back = el("button", { type: "button", class: "kexback", text: "戻す", disabled: readOnly, title: "個別商品コードの組み合わせに戻します（元の位置に空の行で入ります）" });
       back.addEventListener("click", () => { flushRegFocus(); restore([c]); flash(`「${t}」を戻しました`); });
       list.append(el("div", { class: "kexi" }, el("span", { class: "kext", text: t }), back));
     }
     const all = el("button", { type: "button", class: "kexall", text: "全部戻す", disabled: readOnly || excluded.length < 2 });
     all.addEventListener("click", () => arm(all, "全部戻す", `${excluded.length}件戻す？`, () => { flushRegFocus(); restore(excluded); flash(`外した組み合わせ${excluded.length}件を戻しました`); }));
-    const kids = [el("div", { class: "kexh" }, el("span", { text: `外した組み合わせ（${excluded.length}件）` }), el("small", { text: mode === 2 ? "" : "個別商品コード・CSV・ChatGPTには出ません" }), all), list];
-    if (mode === 2) {
-      /* Yahooは2種類のとき組み合わせを全部登録する必要がある → 戻すか、残りを1種類にまとめる */
+    const kids = [el("div", { class: "kexh" }, el("span", { text: `外した組み合わせ（${excluded.length}件）` }), el("small", { text: mode >= 2 ? "" : "個別商品コード・CSV・ChatGPTには出ません" }), all), list];
+    if (mode >= 2) {
+      /* Yahooは2種類以上のとき組み合わせを全部登録する必要がある → 戻すか、残りを1種類にまとめる */
       const merge = el("button", { type: "button", class: "kexmerge", text: `残りの${combos.length}件で「1種類」にまとめる`, disabled: readOnly || !same || !combos.length || combos.length > 100,
         title: combos.length > 100 ? "1種類にできる選択肢は100件までです" : !same ? "先に組み合わせを割り当て直してください" : "「1set目＋2set目」のような1つのオプション項目にして、残っている組み合わせを選択肢にします（個別商品コードはそのまま）" });
       merge.addEventListener("click", () => arm(merge, merge.textContent, "1種類にまとめる？", () => { flushRegFocus(); mergeToOne(); }));
       kids.unshift(el("div", { class: "kexwarn" },
         el("b", { text: "このままではYahooに登録できません" }),
-        el("span", { text: `オプション項目が2つのとき、Yahooは「${os[0].name || "項目1"} × ${os[1].name || "項目2"}」の組み合わせを全部（${combos.length + excluded.length}件）登録する必要があります。外した組み合わせを「全部戻す」でコードを入れるか、残りの組み合わせを1つのオプション項目にまとめてください。` }),
+        el("span", { text: `オプション項目が${mode}つのとき、Yahooは「${optNames.join(" × ")}」の組み合わせを全部（${combos.length + excluded.length}件）登録する必要があります。外した組み合わせを「全部戻す」でコードを入れるか、残りの組み合わせを1つのオプション項目にまとめてください。` }),
         merge));
     }
-    return el("div", { class: "kex" + (mode === 2 ? " ng" : "") }, ...kids);
+    return el("div", { class: "kex" + (mode >= 2 ? " ng" : "") }, ...kids);
   }
-  /* 2種類 → 1種類：残っている組み合わせ「選択肢1/選択肢2」を、1つのオプション項目の選択肢にする（個別商品コードはそのまま） */
+  /* 2種類・3種類 → 1種類：残っている組み合わせ「選択肢1＋選択肢2（＋選択肢3）」を、1つのオプション項目の選択肢にする（個別商品コードはそのまま） */
   const mergeToOne = () => {
     const now = yNorm(curReg()), v = now.vars[i] || {}, f = kindInfo(v);
     if (!f.same || !f.combos.length) { flash("先に組み合わせを割り当て直してください"); return; }
     if (f.combos.length > 100) { flash("1種類にできる選択肢は100件までです"); return; }
     /* 記号は全角の「＋」でつなぐ（Yahooの区切りに使う「: # = &」やスペースを使わないため） */
-    const lab = (o1, o2) => `${o1}＋${o2}`;
-    const name = `${f.os[0].name.trim() || "項目1"}＋${f.os[1].name.trim() || "項目2"}`;
+    const lab = (k) => comboParts(f.cs, k).join("＋");
+    const name = f.cs.flatMap((c, j) => (c.length ? [f.os[j].name.trim() || `項目${j + 1}`] : [])).join("＋");
     writeY(id, (yy) => {
       while (yy.vars.length <= i) yy.vars.push({});
       const cur = yy.vars[i] || {};
       yy.vars[i] = { ...cur, optMode: 1,
-        opts: [{ name, choices: f.combos.map((c) => lab(c.o1, c.o2)) }, { name: "", choices: [] }],
-        kinds: kindsOf(cur).map((k) => ({ ...k, o1: lab(k.o1, k.o2), o2: "" })), excl: [] };
+        opts: [{ name, choices: f.combos.map(lab) }, { name: "", choices: [] }, { name: "", choices: [] }],
+        kinds: kindsOf(cur).map((k) => ({ ...k, o1: lab(k), o2: "", o3: "" })), excl: [] };
     });
     flash(`「${name}」の1種類（${f.combos.length}件）にまとめました。個別商品コードはそのままです`);
   };
@@ -4659,8 +4675,8 @@ function kindLower(i, y) {
     const lineVals = () => ta.value.replace(/\r/g, "").split("\n");
     ord.forEach((r, p) => {
       const k = kinds[r] || {};
-      const bad = (c1.length && !c1.includes(k.o1)) || (c2.length && !c2.includes(k.o2));
-      const parts = [c1.length ? k.o1 || "未選択" : "", c2.length ? k.o2 || "未選択" : ""].filter((x) => x !== "");
+      const bad = cs.some((c, j) => c.length && !c.includes(k[OK[j]]));
+      const parts = comboParts(cs, k, "未選択");
       const lab = el("span", { class: "kcln" + (bad ? " bad" : ""), title: parts.join(" / ") + (bad ? "（今の選択肢にありません。割り当て直してください）" : "") });
       parts.forEach((t, x) => { if (x) lab.append(el("span", { class: "sep", text: "/" })); lab.append(t); });
       const isCp = !!k.cp;
@@ -4671,8 +4687,8 @@ function kindLower(i, y) {
         x.addEventListener("mousedown", (e) => e.preventDefault());
         x.addEventListener("click", () => {
           flushRegFocus();
-          const go = () => { exclude([{ o1: k.o1, o2: k.o2 }]); if (mode === 2) flash("外しました。ただし2種類のままではYahooに登録できません（下の「外した組み合わせ」を見てください）"); };
-          const now = kindsOf(curVar()).find((q) => q.o1 === k.o1 && q.o2 === k.o2) || {};
+          const go = () => { exclude([{ o1: k.o1, o2: k.o2, o3: k.o3 }]); if (mode >= 2) flash(`外しました。ただし${MODE_NAMES[mode]}のままではYahooに登録できません（下の「外した組み合わせ」を見てください）`); };
+          const now = kindsOf(curVar()).find((q) => sameCombo(q, k)) || {};
           if (x.dataset.armed || now.code.trim()) arm(x, "×", "外す？", go); else go();
         });
         row.append(x);
@@ -4741,7 +4757,7 @@ function kindLower(i, y) {
     ref.refresh(curReg());
     regRefs.push(ref);
     return el("div", { class: "kcwrap" },
-      el("div", { class: "kchd" }, el("span", { text: [c1.length ? os[0].name || "項目1" : "", c2.length ? os[1].name || "項目2" : ""].filter(Boolean).join(" / ") }), el("span", { class: "kchr" }, el("span", { text: "個別商品コード", title: "1行に1つ。入力欄の上から順に、左の組み合わせの行に入ります（表計算から縦にまとめて貼り付けOK）" }), stat)),
+      el("div", { class: "kchd" }, el("span", { text: optNames.join(" / ") }), el("span", { class: "kchr" }, el("span", { text: "個別商品コード", title: "1行に1つ。入力欄の上から順に、左の組み合わせの行に入ります（表計算から縦にまとめて貼り付けOK）" }), stat)),
       el("div", { class: "kcodes" }, labs, box2));
   }
 
@@ -4780,7 +4796,7 @@ function kindLower(i, y) {
   for (let r = 0; r < rows; r++) box.append(rowEl(r, r === 0));
   if (!readOnly) {
     const add = el("button", { type: "button", class: "kadd", text: "＋ 種類を追加" });
-    add.addEventListener("click", () => { regFocusAfter = `rg-y-${i}-k${rows}-code`; setKinds((ks) => { ks.push({ code: "", name: "", o1: "", o2: "" }); }); });
+    add.addEventListener("click", () => { regFocusAfter = `rg-y-${i}-k${rows}-code`; setKinds((ks) => { ks.push({ code: "", name: "", o1: "", o2: "", o3: "" }); }); });
     box.append(add);
   }
   return box;
@@ -4803,7 +4819,7 @@ function assignBar(y) {
     const targets = Array.from({ length: now.count }, (_, i) => i).filter((i) => { const f = kindInfo(now.vars[i] || {}); return f.grouped && !f.same; });
     if (!targets.length) return;
     const lost = targets.reduce((s, i) => { const f = kindInfo(now.vars[i] || {}); return s + planKinds(f.kinds, f.combos).lost; }, 0);
-    const redo = targets.some((i) => kindsOf(now.vars[i]).some((k) => k.o1 || k.o2 || k.code.trim()));
+    const redo = targets.some((i) => kindsOf(now.vars[i]).some((k) => k.o1 || k.o2 || k.o3 || k.code.trim()));
     const go = () => {
       let n = 0;
       writeY(id, (yy) => {
@@ -4859,7 +4875,7 @@ function assignBar(y) {
   });
   /* ② のもう一つ：オプション項目と商品コードを質問文にまとめて ChatGPT を開く */
   const gpt = el("button", { type: "button", class: "gptbtn ybargpt", disabled: !nGpt,
-    title: nGpt ? "商品コードと、オプション項目の組み合わせ（2種類なら項目1×項目2の全部）を質問文にまとめてコピーし、ChatGPTを新しいウィンドウで開きます" : "オプション項目の選択肢がまだありません" });
+    title: nGpt ? "商品コードと、オプション項目の組み合わせ（2種類以上なら項目1×項目2（×項目3）の全部）を質問文にまとめてコピーし、ChatGPTを新しいウィンドウで開きます" : "オプション項目の選択肢がまだありません" });
   gpt.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5h4.5V7M13.5 2.5 7 9M11.5 9.5v4h-9v-9h4"/></svg>';
   gpt.append("② オプション項目のChatGPT");
   gpt.addEventListener("mousedown", (e) => e.preventDefault());
@@ -4886,23 +4902,23 @@ const OPTGPT_DEFAULT = `Yahooショッピングに登録する商品の「個別
 
 ・個別商品コードは「商品コード」のうしろに、選択肢を表す短い半角英数字をハイフンでつなげた形にしてください（例：wb-26-01 → wb-26-01-20mm）
 ・使える文字は半角英数字とハイフンだけです
-・オプション項目が2つある商品は「選択肢1 / 選択肢2」の組み合わせごとに1つずつ作ってください（例：wb-26-01 → wb-26-01-20mm-bk）
+・オプション項目が2つ以上ある商品は「選択肢1 / 選択肢2（/ 選択肢3）」の組み合わせごとに1つずつ作ってください（例：wb-26-01 → wb-26-01-20mm-bk）
 ・商品ごとに、並んでいる順番どおり1行に1つずつ、件数ぶん全部の個別商品コードだけを出してください（表計算にそのまま貼れる形で）
 
 ${OPTGPT_SLOT}`;
 const optGptText = () => { try { return localStorage.getItem(OPTGPT_KEY) || OPTGPT_DEFAULT; } catch (_) { return OPTGPT_DEFAULT; } };
 /* 商品ごとに「商品コード・項目名・組み合わせ」をまとめる（オプション項目を使っていて選択肢がある商品だけ）。
-   並びは個別商品コードの枠と同じ（割り当て済みならその順、まだなら項目1が外側・項目2が内側）。
-   2種類の商品は「選択肢1 / 選択肢2」の組み合わせを全部（6×6なら36行）出す */
+   並びは個別商品コードの枠と同じ（割り当て済みならその順、まだなら項目1が外側・項目3が内側）。
+   2種類以上の商品は「選択肢1 / 選択肢2（/ 選択肢3）」の組み合わせを全部（6×6なら36行）出す */
 function optGptList(yy) {
   const out = [];
   for (let i = 0; i < yy.count; i++) {
     const v = yy.vars[i] || {};
     const f = kindInfo(v);
     if (!f.mode || !f.grouped) continue;
-    const lab = (o1, o2) => [f.c1.length ? o1 : "", f.c2.length ? o2 : ""].filter(Boolean).join(" / ");
-    const lines = f.same && f.kinds.length ? kindOrder(f.kinds, f.c1).map((r) => lab(f.kinds[r].o1, f.kinds[r].o2)) : f.combos.map((c) => lab(c.o1, c.o2));
-    const names = [f.c1.length ? f.os[0].name || "（未入力）" : "", f.c2.length ? f.os[1].name || "（未入力）" : ""].filter(Boolean).join(" / ");
+    const lab = (k) => comboParts(f.cs, k).filter(Boolean).join(" / ");
+    const lines = f.same && f.kinds.length ? kindOrder(f.kinds, f.c1).map((r) => lab(f.kinds[r])) : f.combos.map(lab);
+    const names = f.cs.flatMap((c, j) => (c.length ? [f.os[j].name || "（未入力）"] : [])).join(" / ");
     /* バリエーション（スペック・表示名）も添える。両方空なら出さない */
     const spec = String(v.spec || "").trim(), vlab = String(v.label || "").trim();
     const varLines = spec || vlab ? [`スペック：${spec || "（未入力）"}`, `表示名：${vlab || "（未入力）"}`] : [];
@@ -5251,12 +5267,12 @@ function bulkToggle(i) {
   b.addEventListener("click", () => {
     flushRegFocus();
     if (regBulk.has(i)) regBulk.delete(i);
-    else { regBulk.set(i, { code: "", o1: "", o2: "", name: "", replace: false }); regFocusAfter = `rg-kb-${i}-code`; }
+    else { regBulk.set(i, { code: "", o1: "", o2: "", o3: "", name: "", replace: false }); regFocusAfter = `rg-kb-${i}-code`; }
     rerenderReg();
   });
   return b;
 }
-/* 種類の一括入力。1種類：商品コード／商品名、2種類：商品コード／項目1／項目2／商品名。
+/* 種類の一括入力。1種類：商品コード／項目1／商品名、2種類・3種類：商品コード／項目1／項目2（／項目3）／商品名。
    1行に1つずつ貼り付けると、上から順に組み合わせて種類にする。表計算からタブ区切りで貼ると列に振り分ける */
 function bulkPanel(i) {
   const id = regId;
@@ -5267,11 +5283,13 @@ function bulkPanel(i) {
   /* 項目名は今の設定を初期値にする */
   if (d.n1 === undefined) d.n1 = os[0].name;
   if (d.n2 === undefined) d.n2 = os[1].name;
-  const cols = mode === 2
+  if (d.n3 === undefined) d.n3 = os[2].name;
+  const cols = mode >= 2
     ? [
         { key: "code", label: "商品コード", mono: true, ph: "wb-26-01-20mm-01\nwb-26-01-20mm-02\n…" },
         { key: "o1", opt: 0, ph: "20mm\n20mm\n…" },
         { key: "o2", opt: 1, ph: "01-ブラック\n02-オフホワイト\n…" },
+        ...(mode === 3 ? [{ key: "o3", opt: 2, ph: "1個\n1個\n…" }] : []),
         { key: "name", label: "商品名", ph: "WB 20mm 01-ブラック\nWB 20mm 02-オフホワイト\n…", trim: true },
       ]
     : [
@@ -5283,12 +5301,12 @@ function bulkPanel(i) {
   const labs = {};
   const colLabel = (c) => c.opt == null ? c.label : `${(d["n" + (c.opt + 1)] || "").trim() || `オプション項目${c.opt + 1}`}の選択肢`;
   const relabel = () => { for (const c of cols) if (labs[c.key]) labs[c.key].textContent = colLabel(c); };
-  const nameEls = (mode === 2 ? [0, 1] : mode === 1 ? [0] : []).map((j) => {
+  const nameEls = optJs(mode).map((j) => {
     const f = "n" + (j + 1);
-    const inp = el("input", { type: "text", id: `rg-kb-${i}-${f}`, placeholder: mode === 2 ? (j === 0 ? "例：サイズ" : "例：カラー") : "例：カラー", autocomplete: "off" });
+    const inp = el("input", { type: "text", id: `rg-kb-${i}-${f}`, placeholder: mode >= 2 ? ["例：サイズ", "例：カラー", "例：セット数"][j] : "例：カラー", autocomplete: "off" });
     inp.value = d[f] || "";
     inp.addEventListener("input", () => { d[f] = inp.value; relabel(); });
-    return el("label", { class: "kbname", for: inp.id }, el("span", { text: mode === 2 ? `オプション項目${j + 1}の項目名` : "項目名" }), inp);
+    return el("label", { class: "kbname", for: inp.id }, el("span", { text: mode >= 2 ? `オプション項目${j + 1}の項目名` : "項目名" }), inp);
   });
   const apply = el("button", { type: "button", class: "applybtn", text: "反映" });
   const tas = {}, cnts = {};
@@ -5353,14 +5371,14 @@ function bulkPanel(i) {
     const total = Math.max(...Object.values(lists).map((l) => l.length));
     if (!total) { flash("貼り付けてから反映してください"); tas.code.focus(); return; }
     const go = () => {
-      const rows = Array.from({ length: total }, (_, r) => ({ code: (lists.code || [])[r] || "", name: (lists.name || [])[r] || "", o1: (lists.o1 || [])[r] || "", o2: (lists.o2 || [])[r] || "" }));
+      const rows = Array.from({ length: total }, (_, r) => ({ code: (lists.code || [])[r] || "", name: (lists.name || [])[r] || "", o1: (lists.o1 || [])[r] || "", o2: (lists.o2 || [])[r] || "", o3: (lists.o3 || [])[r] || "" }));
       writeY(id, (yy) => {
         while (yy.vars.length <= i) yy.vars.push({});
         const v = yy.vars[i] || {};
         const cur = kindsOf(v).filter((k) => (k.code + k.name).trim());
         const o = optsOf(v);
         /* 項目名を入れ、選択肢の列に入っている値で、まだ選択肢にないものは選択肢に足す（出てきた順） */
-        for (const [j, f] of mode === 2 ? [[0, "o1"], [1, "o2"]] : mode === 1 ? [[0, "o1"]] : []) {
+        for (const [j, f] of optJs(mode).map((j) => [j, OK[j]])) {
           const nm = (d["n" + (j + 1)] || "").trim();
           if (nm) o[j].name = nm;
           const have = optChoices(o[j]);
@@ -5384,13 +5402,13 @@ function bulkPanel(i) {
   });
   upd();
   return el("div", { class: "kbulk" },
-    el("div", { class: "kbt" }, mode === 2 ? "一括入力（オプション2種類）" : mode === 1 ? "一括入力（オプション1種類）" : "一括入力（オプションなし）",
-      el("small", { text: mode === 2
-        ? "列ごとに1行1つずつ貼り付け。表計算から4列まとめて貼っても振り分けます。項目1・2の値は選択肢にも自動で追加します"
+    el("div", { class: "kbt" }, mode ? `一括入力（オプション${MODE_NAMES[mode]}）` : "一括入力（オプションなし）",
+      el("small", { text: mode >= 2
+        ? `列ごとに1行1つずつ貼り付け。表計算から${mode + 2}列まとめて貼っても振り分けます。項目${optJs(mode).map((j) => j + 1).join("・")}の値は選択肢にも自動で追加します`
         : mode === 1 ? "項目名を入れ、列ごとに1行1つずつ貼り付け。表計算から3列まとめて貼っても振り分けます。選択肢の値は選択肢にも自動で追加します（選択肢の列は空でもOK）"
         : "商品コードと商品名を1行に1つずつ貼り付けると、上から順に種類として追加します" })),
     ...(nameEls.length ? [el("div", { class: "kbnames" }, ...nameEls)] : []),
-    el("div", { class: "kb2" + (mode === 2 ? " k4" : mode === 1 ? " k3" : "") }, ...colEls),
+    el("div", { class: "kb2" + (mode === 3 ? " k5" : mode === 2 ? " k4" : mode === 1 ? " k3" : "") }, ...colEls),
     el("div", { class: "kbfoot" }, el("label", { class: "kbrep" }, rep, "今の種類を置き換える"), cancel, apply));
 }
 /* この商品のコピー済み（項目＋種類の行）の数 */
@@ -5504,15 +5522,15 @@ function regChanges(a, b) {
   const ya = yNorm(a), yb = yNorm(b);
   if (ya.count !== yb.count) add("y", "登録する商品数", ya.count ? `${ya.count}個` : "", yb.count ? `${yb.count}個` : "");
   if (ya.group !== yb.group) add("y", "グルーピングID（共通）", ya.group, yb.group);
-  const kindText = (v) => kindsOf(v).map((k) => { const o = [k.o1, k.o2].filter(Boolean).join(" / "); return (o ? o + "：" : "") + (k.code || "（未入力）") + (k.name ? `（${k.name}）` : ""); }).join("\n");
+  const kindText = (v) => kindsOf(v).map((k) => { const o = [k.o1, k.o2, k.o3].filter(Boolean).join(" / "); return (o ? o + "：" : "") + (k.code || "（未入力）") + (k.name ? `（${k.name}）` : ""); }).join("\n");
   let cpN = 0;
   for (let i = 0; i < Math.min(ya.count, yb.count); i++) {
     const va = ya.vars[i] || {}, vb = yb.vars[i] || {}, P = `商品${i + 1}：`;
     for (const f of [...Y_VAR_BOX, ...Y_FIELDS]) if (s(va[f.k]) !== s(vb[f.k])) add("y", P + f.label, va[f.k], vb[f.k]);
-    const ma = optMode(va), mb = optMode(vb), mn = (m) => ["なし", "1種類", "2種類"][m];
+    const ma = optMode(va), mb = optMode(vb), mn = (m) => MODE_NAMES[m];
     if (ma !== mb) add("y", P + "オプション項目の数", mn(ma), mn(mb));
     const oa = optsOf(va), ob = optsOf(vb);
-    for (let j = 0; j < 2; j++) {
+    for (let j = 0; j < OPT_MAX; j++) {
       if (oa[j].name !== ob[j].name) add("y", P + `オプション項目${j + 1}の項目名`, oa[j].name, ob[j].name);
       const ca = optChoices(oa[j]).join("\n"), cb = optChoices(ob[j]).join("\n");
       if (ca !== cb) add("y", P + `オプション項目${j + 1}の選択肢`, ca, cb);
